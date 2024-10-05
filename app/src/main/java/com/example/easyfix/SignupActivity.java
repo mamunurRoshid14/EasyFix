@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ public class SignupActivity extends AppCompatActivity {
     private EditText etEmail, etPassword, etRetypePassword;
     private Button btnSignUp;
     private TextView tvLogin;
+    private ProgressBar progressBar;
     private FirebaseAuth mAuth;
 
     @Override
@@ -31,6 +33,7 @@ public class SignupActivity extends AppCompatActivity {
         etRetypePassword = findViewById(R.id.etRetypePassword);
         btnSignUp = findViewById(R.id.btnSignUp);
         tvLogin = findViewById(R.id.tvLogin);
+        progressBar = findViewById(R.id.progressBar);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -46,6 +49,7 @@ public class SignupActivity extends AppCompatActivity {
                 } else if (!password.equals(retypePassword)) {
                     Toast.makeText(SignupActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
                 } else {
+                    progressBar.setVisibility(View.VISIBLE);
                     registerUser(email, password);
                 }
             }
@@ -64,6 +68,7 @@ public class SignupActivity extends AppCompatActivity {
     private void registerUser(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
+                    progressBar.setVisibility(View.GONE);
                     if (task.isSuccessful()) {
                         // Registration success
                         FirebaseUser user = mAuth.getCurrentUser();
