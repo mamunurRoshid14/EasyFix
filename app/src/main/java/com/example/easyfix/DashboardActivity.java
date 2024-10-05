@@ -27,7 +27,6 @@ public class DashboardActivity extends AppCompatActivity {
         btnCompleteProfile = findViewById(R.id.btnCompleteProfile);
         btnSignOut = findViewById(R.id.btnSignOut);
         tvUserEmail = findViewById(R.id.tvUserEmail);
-
         if (currentUser != null) {
             tvUserEmail.setText(currentUser.getEmail());
         }

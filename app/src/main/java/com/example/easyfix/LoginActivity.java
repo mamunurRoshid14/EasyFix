@@ -29,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
+        tvSignUp = findViewById(R.id.tvSignUp);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -50,14 +51,21 @@ public class LoginActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
                     Toast.makeText(LoginActivity.this, "All fields are required", Toast.LENGTH_SHORT).show();
                 } else {
-                    loginOrRegisterUser(email, password);
+                    loginUser(email, password);
                 }
             }
         });
 
+        tvSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
-    private void loginOrRegisterUser(String email, String password) {
+    private void loginUser(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
@@ -67,20 +75,8 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     } else {
-                        // If sign in fails, try to register the user
-                        mAuth.createUserWithEmailAndPassword(email, password)
-                                .addOnCompleteListener(this, registerTask -> {
-                                    if (registerTask.isSuccessful()) {
-                                        // Registration success
-                                        FirebaseUser user = mAuth.getCurrentUser();
-                                        Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
-                                        startActivity(intent);
-                                        finish();
-                                    } else {
-                                        // If registration fails, display a message to the user
-                                        Toast.makeText(LoginActivity.this, "Authentication failed: " + registerTask.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                        // If sign in fails, display a message to the user
+                        Toast.makeText(LoginActivity.this, "Authentication failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }

@@ -28,17 +28,25 @@
             android:inputType="textPassword"
             android:layout_marginBottom="16dp" />
 
-        <Button
-            android:id="@+id/btnLogin"
+        <EditText
+            android:id="@+id/etRetypePassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Login" />
+            android:hint="Retype Password"
+            android:inputType="textPassword"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/btnSignUp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sign Up" />
 
         <TextView
-            android:id="@+id/tvSignUp"
+            android:id="@+id/tvLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Don't have an account? Sign Up"
+            android:text="Already have an account? Login here"
             android:textColor="@android:color/holo_blue_dark"
             android:layout_marginTop="16dp" />
     </LinearLayout>
