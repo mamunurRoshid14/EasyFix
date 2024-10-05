@@ -8,48 +8,80 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText etPhoneNumber, etPassword;
+    private EditText etEmail, etPassword;
     private Button btnLogin;
     private TextView tvSignUp;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        etPhoneNumber = findViewById(R.id.etPhoneNumber);
+        etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
-        tvSignUp = findViewById(R.id.tvSignUp);
+
+        mAuth = FirebaseAuth.getInstance();
+
+        // Check if user is already signed in
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            // User is signed in, navigate to DashboardActivity
+            Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String phoneNumber = etPhoneNumber.getText().toString().trim();
+                String email = etEmail.getText().toString().trim();
                 String password = etPassword.getText().toString().trim();
 
-                if (TextUtils.isEmpty(phoneNumber) || TextUtils.isEmpty(password)) {
+                if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
                     Toast.makeText(LoginActivity.this, "All fields are required", Toast.LENGTH_SHORT).show();
                 } else {
-                    // Handle the login logic here
-                    // Assuming login is successful, open the DashboardActivity
-                    Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
-                    startActivity(intent);
-                    finish(); // Optional: Call finish() to close the LoginActivity
+                    loginOrRegisterUser(email, password);
                 }
             }
         });
 
-        tvSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-                startActivity(intent);
-            }
-        });
+    }
+
+    private void loginOrRegisterUser(String email, String password) {
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        // Sign in success
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        // If sign in fails, try to register the user
+                        mAuth.createUserWithEmailAndPassword(email, password)
+                                .addOnCompleteListener(this, registerTask -> {
+                                    if (registerTask.isSuccessful()) {
+                                        // Registration success
+                                        FirebaseUser user = mAuth.getCurrentUser();
+                                        Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    } else {
+                                        // If registration fails, display a message to the user
+                                        Toast.makeText(LoginActivity.this, "Authentication failed: " + registerTask.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
+                });
     }
 }

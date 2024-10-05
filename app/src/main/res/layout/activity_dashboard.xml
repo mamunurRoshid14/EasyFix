@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -24,11 +23,21 @@
         android:layout_marginTop="16dp"
         android:layout_centerHorizontal="true" />
 
+    <TextView
+        android:id="@+id/tvUserEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="User Email"
+        android:textSize="16sp"
+        android:layout_below="@id/tvBasicInfo"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_below="@id/tvBasicInfo"
+        android:layout_below="@id/tvUserEmail"
         android:layout_marginTop="32dp"
         android:gravity="center">
 
@@ -43,6 +52,13 @@
             android:id="@+id/btnCompleteProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Complete Profile" />
+            android:text="Complete Profile"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/btnSignOut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign Out" />
     </LinearLayout>
 </RelativeLayout>
