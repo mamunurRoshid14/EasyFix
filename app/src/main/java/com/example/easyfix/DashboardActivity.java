@@ -2,18 +2,35 @@ package com.example.easyfix;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.easyfix.Auth.LoginActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 public class DashboardActivity extends AppCompatActivity {
 
-    private Button btnFindService, btnCompleteProfile, btnSignOut;
-    private TextView tvUserEmail;
+    private static final String TAG = "DashboardActivity";
+
+    private Button btnEditProfile, btnSignOut;
+    private TextView tvUserEmail, tvFullName, tvPhoneNumber;
+    private ImageView ivProfilePicture;
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,31 +38,25 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
 
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        btnFindService = findViewById(R.id.btnFindService);
-        btnCompleteProfile = findViewById(R.id.btnCompleteProfile);
         btnSignOut = findViewById(R.id.btnSignOut);
+        btnEditProfile = findViewById(R.id.btnEditProfile);
         tvUserEmail = findViewById(R.id.tvUserEmail);
+        tvFullName = findViewById(R.id.tvFullName);
+        tvPhoneNumber = findViewById(R.id.tvPhoneNumber);
+        ivProfilePicture = findViewById(R.id.ivProfilePicture);
+
         if (currentUser != null) {
             tvUserEmail.setText(currentUser.getEmail());
+
+            // Fetch user profile from Firestore
+            fetchUserProfile(currentUser.getUid());
+        } else {
+            Log.e(TAG, "Current user is null");
+            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
         }
-
-/*        btnFindService.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DashboardActivity.this, FindServiceActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        btnCompleteProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DashboardActivity.this, CompleteProfileActivity.class);
-                startActivity(intent);
-            }
-        });*/
 
         btnSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +65,55 @@ public class DashboardActivity extends AppCompatActivity {
                 Intent intent = new Intent(DashboardActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+
+        btnEditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DashboardActivity.this, UserProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void fetchUserProfile(String userId) {
+        Log.d(TAG, "Fetching user profile for userId: " + userId);
+        DocumentReference docRef = db.collection("users").document(userId);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document != null && document.exists()) {
+                        try {
+                            Log.d(TAG, "Document data: " + document.getData());
+                            UserAccount user = document.toObject(UserAccount.class);
+                            if (user != null) {
+                                Log.d(TAG, "User profile loaded: " + user.getFullName());
+                                runOnUiThread(() -> {
+                                    tvFullName.setText(user.getFullName());
+                                    tvPhoneNumber.setText(user.getPhoneNumber());
+                                    if (user.getImageUrl() != null) {
+                                        Picasso.get().load(user.getImageUrl()).into(ivProfilePicture);
+                                    }
+                                });
+                            } else {
+                                Log.e(TAG, "UserAccount object is null");
+                                runOnUiThread(() -> Toast.makeText(DashboardActivity.this, "Error loading profile", Toast.LENGTH_SHORT).show());
+                            }
+                        } catch (Exception e) {
+                            Log.e(TAG, "Error parsing user document", e);
+                            runOnUiThread(() -> Toast.makeText(DashboardActivity.this, "Error loading profile", Toast.LENGTH_SHORT).show());
+                        }
+                    } else {
+                        Log.e(TAG, "Document does not exist");
+                        runOnUiThread(() -> Toast.makeText(DashboardActivity.this, "User profile not found", Toast.LENGTH_SHORT).show());
+                    }
+                } else {
+                    Log.e(TAG, "Task failed with exception: ", task.getException());
+                    runOnUiThread(() -> Toast.makeText(DashboardActivity.this, "Error fetching profile", Toast.LENGTH_SHORT).show());
+                }
             }
         });
     }

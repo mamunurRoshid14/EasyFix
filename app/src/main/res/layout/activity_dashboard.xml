@@ -7,53 +7,77 @@
         android:id="@+id/tvWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
         android:text="Welcome to EasyFix!"
         android:textSize="24sp"
-        android:textStyle="bold"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/ivProfilePicture"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/tvWelcome"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp" />
+        android:layout_marginTop="16dp"
+        android:src="@drawable/default_profile_image"
+        android:contentDescription="Profile Picture"
+        android:scaleType="centerCrop"
+        android:background="@drawable/circle_background" />
 
     <TextView
         android:id="@+id/tvBasicInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Here is some basic information about your account."
-        android:textSize="16sp"
-        android:layout_below="@id/tvWelcome"
+        android:layout_below="@id/ivProfilePicture"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:layout_centerHorizontal="true" />
+        android:text="Here is some basic information about your account."
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/tvUserEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="User Email"
-        android:textSize="16sp"
         android:layout_below="@id/tvBasicInfo"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:layout_centerHorizontal="true" />
+        android:text="User Email"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvFullName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvUserEmail"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Full Name"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvPhoneNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvFullName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Phone Number"
+        android:textSize="16sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@id/tvUserEmail"
+        android:layout_below="@id/tvPhoneNumber"
         android:layout_marginTop="32dp"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <Button
-            android:id="@+id/btnFindService"
+            android:id="@+id/btnEditProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Find Service"
-            android:layout_marginBottom="16dp" />
-
-        <Button
-            android:id="@+id/btnCompleteProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Complete Profile"
-            android:layout_marginBottom="16dp" />
+            android:text="Edit Profile" />
 
         <Button
             android:id="@+id/btnSignOut"

@@ -12,10 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EasyFix"
         tools:targetApi="31">
-        <activity android:name=".SignupActivity"></activity>
+        <activity android:name=".Auth.SignupActivity"></activity>
         <activity android:name=".DashboardActivity"></activity>
+        <activity android:name=".UserProfileActivity"></activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".Auth.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
