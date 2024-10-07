@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +29,7 @@ public class DashboardActivity extends AppCompatActivity {
     private static final String TAG = "DashboardActivity";
 
     private Button btnEditProfile, btnSignOut;
-    private TextView tvUserEmail, tvFullName, tvPhoneNumber;
+    private TextView tvUserEmail, tvFullName, tvPhoneNumber, tvLocation, tvAge;
     private ImageView ivProfilePicture;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
@@ -46,6 +48,8 @@ public class DashboardActivity extends AppCompatActivity {
         tvUserEmail = findViewById(R.id.tvUserEmail);
         tvFullName = findViewById(R.id.tvFullName);
         tvPhoneNumber = findViewById(R.id.tvPhoneNumber);
+        tvLocation = findViewById(R.id.tvLocation);
+        tvAge = findViewById(R.id.tvAge);
         ivProfilePicture = findViewById(R.id.ivProfilePicture);
 
         if (currentUser != null) {
@@ -94,6 +98,8 @@ public class DashboardActivity extends AppCompatActivity {
                                 runOnUiThread(() -> {
                                     tvFullName.setText(user.getFullName());
                                     tvPhoneNumber.setText(user.getPhoneNumber());
+                                    tvLocation.setText(user.getLocation());
+                                    tvAge.setText(String.valueOf(user.getAge()));
                                     if (user.getImageUrl() != null) {
                                         Picasso.get().load(user.getImageUrl()).into(ivProfilePicture);
                                     }
