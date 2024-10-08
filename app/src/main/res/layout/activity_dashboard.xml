@@ -14,7 +14,7 @@
         android:textStyle="bold"
         android:textColor="@android:color/black" />
 
-    <ImageView
+    <com.example.easyfix.OvalImageView
         android:id="@+id/ivProfilePicture"
         android:layout_width="200dp"
         android:layout_height="220dp"
