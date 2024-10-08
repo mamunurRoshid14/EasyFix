@@ -21,7 +21,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText etEmail, etPassword;
     private Button btnLogin;
-    private TextView tvSignUp;
+    private TextView tvSignUp, tvForgotPassword;
     private ProgressBar progressBar;
     private FirebaseAuth mAuth;
 
@@ -34,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
         tvSignUp = findViewById(R.id.tvSignUp);
+        tvForgotPassword = findViewById(R.id.tvForgotPassword);
         progressBar = findViewById(R.id.progressBar);
 
         mAuth = FirebaseAuth.getInstance();
@@ -46,14 +47,15 @@ public class LoginActivity extends AppCompatActivity {
             // Verify the session
             currentUser.reload().addOnCompleteListener(task -> {
                 progressBar.setVisibility(View.GONE);
-                if (task.isSuccessful()) {
-                    // User session is valid, navigate to DashboardActivity
+                if (task.isSuccessful() && currentUser.isEmailVerified()) {
+                    // User session is valid and email is verified, navigate to DashboardActivity
                     Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
                     startActivity(intent);
                     finish();
                 } else {
-                    // Session is invalid, sign out the user
+                    // Session is invalid or email is not verified, sign out the user
                     mAuth.signOut();
+                    Toast.makeText(LoginActivity.this, "Please verify your email address.", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -80,6 +82,14 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        tvForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void loginUser(String email, String password) {
@@ -89,9 +99,14 @@ public class LoginActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         // Sign in success
                         FirebaseUser user = mAuth.getCurrentUser();
-                        Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
-                        startActivity(intent);
-                        finish();
+                        if (user != null && user.isEmailVerified()) {
+                            Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            mAuth.signOut();
+                            Toast.makeText(LoginActivity.this, "Please verify your email address.", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
                         // If sign in fails, display a message to the user
                         Toast.makeText(LoginActivity.this, "Authentication failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
