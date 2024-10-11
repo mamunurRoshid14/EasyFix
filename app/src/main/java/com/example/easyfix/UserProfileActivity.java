@@ -1,6 +1,8 @@
 package com.example.easyfix;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,12 +10,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,10 +38,12 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private static final String TAG = "UserProfileActivity";
     private static final int PICK_IMAGE_REQUEST = 1;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 100;
 
     private EditText editTextFullName, editTextPhoneNumber, editTextEmail, editTextLocation, editTextAge;
     private ImageView imageViewProfilePhoto;
-    private Button buttonSave;
+    private Spinner spinnerTypeOfService;
+    private Button buttonSave, buttonUpdateLocation;
     private Uri imageUri;
 
     private FirebaseAuth mAuth;
@@ -43,6 +51,10 @@ public class UserProfileActivity extends AppCompatActivity {
     private FirebaseStorage storage;
     private StorageReference storageReference;
     private FirebaseUser currentUser;
+    private FusedLocationProviderClient fusedLocationClient;
+
+    private double latitude;
+    private double longitude;
     private String currentImageUrl;
 
     @Override
@@ -55,6 +67,7 @@ public class UserProfileActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         currentUser = mAuth.getCurrentUser();
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         editTextFullName = findViewById(R.id.editTextFullName);
         editTextPhoneNumber = findViewById(R.id.editTextPhoneNumber);
@@ -63,11 +76,20 @@ public class UserProfileActivity extends AppCompatActivity {
         editTextAge = findViewById(R.id.editTextAge);
         imageViewProfilePhoto = findViewById(R.id.imageViewProfilePhoto);
         buttonSave = findViewById(R.id.buttonSave);
+        buttonUpdateLocation = findViewById(R.id.buttonUpdateLocation);
+        spinnerTypeOfService = findViewById(R.id.spinnerTypeOfService);
 
         imageViewProfilePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openFileChooser();
+            }
+        });
+
+        buttonUpdateLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateLocation();
             }
         });
 
@@ -115,6 +137,10 @@ public class UserProfileActivity extends AppCompatActivity {
                             editTextLocation.setText(user.getLocation());
                             editTextAge.setText(String.valueOf(user.getAge()));
                             currentImageUrl = user.getImageUrl();
+                            latitude = user.getLatitude();
+                            longitude = user.getLongitude();
+                            // Assuming spinner is set up to reflect the service type
+                            // Set spinner selection based on user.getTypeofService()
                             if (currentImageUrl != null) {
                                 Picasso.get().load(currentImageUrl).into(imageViewProfilePhoto);
                             }
@@ -129,12 +155,38 @@ public class UserProfileActivity extends AppCompatActivity {
         });
     }
 
+    private void updateLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
+        } else {
+            fusedLocationClient.getLastLocation().addOnSuccessListener(this, location -> {
+                if (location != null) {
+                    latitude = location.getLatitude();
+                    longitude = location.getLongitude();
+                    Toast.makeText(UserProfileActivity.this, "Location updated", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                updateLocation();
+            } else {
+                Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     private void saveUserProfile() {
-        final String fullName = editTextFullName.getText().toString();
-        final String phoneNumber = editTextPhoneNumber.getText().toString();
-        final String email = editTextEmail.getText().toString();
-        final String location = editTextLocation.getText().toString();
-        final int age = Integer.parseInt(editTextAge.getText().toString());
+        String fullName = editTextFullName.getText().toString();
+        String phoneNumber = editTextPhoneNumber.getText().toString();
+        String email = editTextEmail.getText().toString();
+        String location = editTextLocation.getText().toString();
+        int age = Integer.parseInt(editTextAge.getText().toString());
+        String typeofService = spinnerTypeOfService.getSelectedItem().toString();
 
         if (imageUri != null) {
             final StorageReference fileReference = storageReference.child("profile_images/" + currentUser.getUid() + ".jpg");
@@ -145,7 +197,7 @@ public class UserProfileActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Uri uri) {
                             String imageUrl = uri.toString();
-                            updateUserProfile(fullName, phoneNumber, email, location, age, imageUrl);
+                            updateUserProfile(fullName, phoneNumber, email, location, age, latitude, longitude, typeofService, imageUrl);
                         }
                     });
                 }
@@ -156,12 +208,12 @@ public class UserProfileActivity extends AppCompatActivity {
                 }
             });
         } else {
-            updateUserProfile(fullName, phoneNumber, email, location, age, currentImageUrl);
+            updateUserProfile(fullName, phoneNumber, email, location, age, latitude, longitude, typeofService, currentImageUrl);
         }
     }
 
-    private void updateUserProfile(String fullName, String phoneNumber, String email, String location, int age, String imageUrl) {
-        UserAccount user = new UserAccount(fullName, phoneNumber, currentUser.getUid(), imageUrl, location, age);
+    private void updateUserProfile(String fullName, String phoneNumber, String email, String location, int age, double latitude, double longitude, String typeofService, String imageUrl) {
+        UserAccount user = new UserAccount(fullName, phoneNumber, currentUser.getUid(), imageUrl, location, age, latitude, longitude, typeofService);
 
         db.collection("users").document(currentUser.getUid()).set(user).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

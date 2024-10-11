@@ -121,7 +121,31 @@
                     android:inputType="number"
                     android:textColor="@android:color/black" />
             </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Type of Service:"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black" />
+                <Spinner
+                    android:id="@+id/spinnerTypeOfService"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/type_of_service_array" />
+            </TableRow>
         </TableLayout>
+
+        <Button
+            android:id="@+id/buttonUpdateLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Update Location"
+            android:backgroundTint="@android:color/holo_blue_light"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="16dp" />
 
         <Button
             android:id="@+id/buttonSave"

@@ -6,8 +6,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,12 +22,15 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 public class DashboardActivity extends AppCompatActivity {
 
     private static final String TAG = "DashboardActivity";
 
     private Button btnEditProfile, btnSignOut;
     private TextView tvUserEmail, tvFullName, tvPhoneNumber, tvLocation, tvAge;
+    private TextView tvLatitude, tvLongitude, tvTypeOfService; // TextViews for latitude, longitude, and service type
     private ImageView ivProfilePicture;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
@@ -51,6 +52,11 @@ public class DashboardActivity extends AppCompatActivity {
         tvLocation = findViewById(R.id.tvLocation);
         tvAge = findViewById(R.id.tvAge);
         ivProfilePicture = findViewById(R.id.ivProfilePicture);
+
+        // Initialize new TextViews
+/*        tvLatitude = findViewById(R.id.tvLatitude);
+        tvLongitude = findViewById(R.id.tvLongitude);*/
+        tvTypeOfService = findViewById(R.id.tvTypeOfService);
 
         if (currentUser != null) {
             tvUserEmail.setText(currentUser.getEmail());
@@ -100,6 +106,9 @@ public class DashboardActivity extends AppCompatActivity {
                                     tvPhoneNumber.setText(user.getPhoneNumber());
                                     tvLocation.setText(user.getLocation());
                                     tvAge.setText(String.valueOf(user.getAge()));
+/*                                    tvLatitude.setText(String.valueOf(user.getLatitude())); // New field for latitude
+                                    tvLongitude.setText(String.valueOf(user.getLongitude())); // New field for longitude*/
+                                    tvTypeOfService.setText(user.getTypeofService()); // New field for service type
                                     if (user.getImageUrl() != null) {
                                         Picasso.get().load(user.getImageUrl()).into(ivProfilePicture);
                                     }

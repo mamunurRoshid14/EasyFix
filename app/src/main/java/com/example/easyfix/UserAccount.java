@@ -10,21 +10,30 @@ public class UserAccount {
     private String imageUrl;
     private String location;
     private int age;
-    private List<String> serviceProfileUid;
+    private double latitude;
+    private double longitude;
+    private String typeofService;
+    private List<String> reviewIds;
 
-    // No-argument constructor required for Firestore
     public UserAccount() {
-        this.serviceProfileUid = new ArrayList<>();
+        this.reviewIds = new ArrayList<>();
     }
 
-    public UserAccount(String fullName, String phoneNumber, String userId, String imageUrl, String location, int age) {
+    public UserAccount(String fullName, String phoneNumber, String userId, String imageUrl, String location, int age, double latitude, double longitude, String typeofService) {
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
         this.userId = userId;
         this.imageUrl = imageUrl;
         this.location = location;
         this.age = age;
-        this.serviceProfileUid = new ArrayList<>();
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.typeofService = typeofService;
+        this.reviewIds = new ArrayList<>();
+    }
+
+    public UserAccount(String fullName, String phoneNumber, String userId, String imageUrl, String location, int age) {
+        this(fullName, phoneNumber, userId, imageUrl, location, age, 0.0, 0.0, "");
     }
 
     public String getFullName() {
@@ -75,21 +84,45 @@ public class UserAccount {
         this.age = age;
     }
 
-    public List<String> getServiceProfileUid() {
-        return serviceProfileUid;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public void setServiceProfileUid(List<String> serviceProfileUid) {
-        this.serviceProfileUid = serviceProfileUid;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 
-    // Method to add a new item to the list
-    public void addServiceProfileUid(String uid) {
-        this.serviceProfileUid.add(uid);
+    public double getLongitude() {
+        return longitude;
     }
 
-    // Method to remove an item from the list
-    public void removeServiceProfileUid(String uid) {
-        this.serviceProfileUid.remove(uid);
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getTypeofService() {
+        return typeofService;
+    }
+
+    public void setTypeofService(String typeofService) {
+        this.typeofService = typeofService;
+    }
+
+    public List<String> getReviewIds() {
+        return reviewIds;
+    }
+
+    public void setReviewIds(List<String> reviewIds) {
+        this.reviewIds = reviewIds;
+    }
+
+    // Method to add a new review ID to the list
+    public void addReviewId(String reviewId) {
+        this.reviewIds.add(reviewId);
+    }
+
+    // Method to remove a review ID from the list
+    public void removeReviewId(String reviewId) {
+        this.reviewIds.remove(reviewId);
     }
 }

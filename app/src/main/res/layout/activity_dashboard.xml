@@ -39,12 +39,12 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+            <!-- Full Name -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="8dp">
-
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -53,7 +53,6 @@
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="@android:color/black" />
-
                 <TextView
                     android:id="@+id/tvFullName"
                     android:layout_width="0dp"
@@ -64,12 +63,12 @@
                     android:textColor="@android:color/black" />
             </LinearLayout>
 
+            <!-- Age -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="8dp">
-
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -78,23 +77,22 @@
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="@android:color/black" />
-
                 <TextView
                     android:id="@+id/tvAge"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="55"
+                    android:text="Not Set"
                     android:textSize="16sp"
                     android:textColor="@android:color/black" />
             </LinearLayout>
 
+            <!-- Email -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="8dp">
-
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -103,23 +101,22 @@
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="@android:color/black" />
-
                 <TextView
                     android:id="@+id/tvUserEmail"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="User Email"
+                    android:text="Not Set"
                     android:textSize="16sp"
                     android:textColor="@android:color/black" />
             </LinearLayout>
 
+            <!-- Phone Number -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="8dp">
-
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -128,23 +125,22 @@
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="@android:color/black" />
-
                 <TextView
                     android:id="@+id/tvPhoneNumber"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Phone Number"
+                    android:text="Not Set"
                     android:textSize="16sp"
                     android:textColor="@android:color/black" />
             </LinearLayout>
 
+            <!-- Location -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="8dp">
-
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -153,18 +149,91 @@
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="@android:color/black" />
-
                 <TextView
                     android:id="@+id/tvLocation"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Location"
+                    android:text="Not Set"
                     android:textSize="16sp"
                     android:textColor="@android:color/black" />
             </LinearLayout>
+
+<!--            &lt;!&ndash; Latitude &ndash;&gt;
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Latitude:"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black" />
+                <TextView
+                    android:id="@+id/tvLatitude"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="Not Set"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
+
+            &lt;!&ndash; Longitude &ndash;&gt;
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Longitude:"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black" />
+                <TextView
+                    android:id="@+id/tvLongitude"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="Not Set"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>-->
+
+            <!-- Type of Service -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Service Type:"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black" />
+                <TextView
+                    android:id="@+id/tvTypeOfService"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="Not Set"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
+
         </LinearLayout>
 
+        <!-- Buttons -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

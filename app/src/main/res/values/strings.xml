@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">EasyFix</string>
+    <string-array name="type_of_service_array">
+        <item>Plumbing</item>
+        <item>Electrical</item>
+        <item>Carpentry</item>
+        <item>Cleaning</item>
+        <item>Painting</item>
+    </string-array>
 </resources>
