@@ -11,13 +11,11 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,12 +25,10 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class FindServiceProvider extends AppCompatActivity {
-
     private static final String TAG = "FindServiceProvider";
     private EditText etRadius;
     private Button btnFind;
@@ -60,7 +56,6 @@ public class FindServiceProvider extends AppCompatActivity {
         // Initialize Firestore
         db = FirebaseFirestore.getInstance();
         userAccounts = new ArrayList<>();
-
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         btnFind.setOnClickListener(new View.OnClickListener() {
@@ -78,16 +73,20 @@ public class FindServiceProvider extends AppCompatActivity {
     private void fetchUsersFromFirestore() {
         CollectionReference usersRef = db.collection("users");
         progressBar.setVisibility(View.VISIBLE);
+
         usersRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 progressBar.setVisibility(View.GONE);
+
                 if (task.isSuccessful()) {
                     userAccounts.clear(); // Clear old data
+
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         UserAccount user = document.toObject(UserAccount.class);
                         userAccounts.add(user);
                     }
+
                     getCurrentLocationAndFilterUsers();
                 } else {
                     Log.w(TAG, "Error getting documents.", task.getException());
@@ -99,11 +98,13 @@ public class FindServiceProvider extends AppCompatActivity {
 
     private void getCurrentLocationAndFilterUsers() {
         progressBar.setVisibility(View.VISIBLE);
+
         fusedLocationClient.getLastLocation()
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
                         progressBar.setVisibility(View.GONE);
+
                         if (location != null) {
                             double currentLat = location.getLatitude();
                             double currentLon = location.getLongitude();
@@ -118,6 +119,7 @@ public class FindServiceProvider extends AppCompatActivity {
 
     private void filterUsers(double currentLat, double currentLon) {
         int radiusKm;
+
         try {
             radiusKm = Integer.parseInt(etRadius.getText().toString());
         } catch (NumberFormatException e) {
@@ -125,17 +127,25 @@ public class FindServiceProvider extends AppCompatActivity {
         }
 
         String selectedServiceType = spinnerTypeOfService.getSelectedItem().toString(); // Get selected service type
-
         List<UserAccount> nearbyUsers = new ArrayList<>();
+
         for (UserAccount user : userAccounts) {
             double distance = DistanceCalculator.getDistance(currentLat, currentLon, user.getLatitude(), user.getLongitude());
+
             if (distance <= radiusKm && user.getTypeofService().equals(selectedServiceType)) {
                 nearbyUsers.add(user);
             }
         }
 
         // Update the RecyclerView with the filtered user list
-        userAdapter = new UserAdapter(nearbyUsers);
+        userAdapter = new UserAdapter(nearbyUsers, new UserAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(UserAccount user) {
+                // Handle item click here
+                Toast.makeText(FindServiceProvider.this, "Clicked: " + user.getUserId(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
         recyclerViewUsers.setAdapter(userAdapter);
         userAdapter.notifyDataSetChanged();
     }

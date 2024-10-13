@@ -4,17 +4,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
-    private List<UserAccount> userList;
 
-    public UserAdapter(List<UserAccount> userList) {
+    private List<UserAccount> userList;
+    private OnItemClickListener onItemClickListener;
+
+    public UserAdapter(List<UserAccount> userList, OnItemClickListener onItemClickListener) {
         this.userList = userList;
+        this.onItemClickListener = onItemClickListener;
     }
 
     @NonNull
@@ -29,9 +30,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         UserAccount user = userList.get(position);
         holder.tvUserName.setText(user.getFullName());
         holder.tvUserAge.setText(String.valueOf(user.getAge()));
-        holder.tvUserServiceType.setText(user.getTypeofService()); // Populate service type
+        holder.tvUserServiceType.setText(user.getTypeofService());
         holder.tvUserPhone.setText(user.getPhoneNumber());
-        holder.tvUserLocation.setText(user.getLocation()); // Populate location
+        holder.tvUserLocation.setText(user.getLocation());
+        holder.bind(userList.get(position), onItemClickListener);
     }
 
     @Override
@@ -50,5 +52,18 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             tvUserPhone = itemView.findViewById(R.id.tvUserPhone);
             tvUserLocation = itemView.findViewById(R.id.tvUserLocation);
         }
+
+        public void bind(final UserAccount user, final OnItemClickListener listener) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onItemClick(user);
+                }
+            });
+        }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(UserAccount user);
     }
 }
