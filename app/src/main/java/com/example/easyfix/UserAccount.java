@@ -1,8 +1,5 @@
 package com.example.easyfix;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class UserAccount {
     private String fullName;
     private String phoneNumber;
@@ -13,10 +10,8 @@ public class UserAccount {
     private double latitude;
     private double longitude;
     private String typeofService;
-    private List<String> reviewIds;
 
     public UserAccount() {
-        this.reviewIds = new ArrayList<>();
     }
 
     public UserAccount(String fullName, String phoneNumber, String userId, String imageUrl, String location, int age, double latitude, double longitude, String typeofService) {
@@ -29,7 +24,6 @@ public class UserAccount {
         this.latitude = latitude;
         this.longitude = longitude;
         this.typeofService = typeofService;
-        this.reviewIds = new ArrayList<>();
     }
 
     public UserAccount(String fullName, String phoneNumber, String userId, String imageUrl, String location, int age) {
@@ -106,23 +100,5 @@ public class UserAccount {
 
     public void setTypeofService(String typeofService) {
         this.typeofService = typeofService;
-    }
-
-    public List<String> getReviewIds() {
-        return reviewIds;
-    }
-
-    public void setReviewIds(List<String> reviewIds) {
-        this.reviewIds = reviewIds;
-    }
-
-    // Method to add a new review ID to the list
-    public void addReviewId(String reviewId) {
-        this.reviewIds.add(reviewId);
-    }
-
-    // Method to remove a review ID from the list
-    public void removeReviewId(String reviewId) {
-        this.reviewIds.remove(reviewId);
     }
 }

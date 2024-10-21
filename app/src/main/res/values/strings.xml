@@ -2,9 +2,26 @@
     <string name="app_name">EasyFix</string>
     <string-array name="type_of_service_array">
         <item>Plumbing</item>
-        <item>Electrical</item>
-        <item>Carpentry</item>
+        <item>Electrical</item
         <item>Cleaning</item>
         <item>Painting</item>
+        <item>Pest Control Services</item>
+        <item>Home Appliance Repair</item>
+        <item>AC Servicing and Repair</item>
+        <item>Pet Care Services</item>
+        <item>Gardening Services</item>
+    </string-array>
+
+    <string-array name="type_of_service_user">
+        <item>Service Taker</item>
+        <item>Plumbing</item>
+        <item>Electrical</item
+        <item>Cleaning</item>
+        <item>Painting</item>
+        <item>Pest Control Services</item>
+        <item>Home Appliance Repair</item>
+        <item>AC Servicing and Repair</item>
+        <item>Pet Care Services</item>
+        <item>Gardening Services</item>
     </string-array>
 </resources>
