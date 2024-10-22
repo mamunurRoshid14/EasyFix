@@ -1,6 +1,7 @@
 package com.example.easyfix;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -85,6 +86,7 @@ public class DashboardActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        setOnClickListeners();
     }
 
     private void fetchUserProfile(String userId) {
@@ -130,6 +132,20 @@ public class DashboardActivity extends AppCompatActivity {
                     runOnUiThread(() -> Toast.makeText(DashboardActivity.this, "Error fetching profile", Toast.LENGTH_SHORT).show());
                 }
             }
+        });
+    }
+
+    private void setOnClickListeners() {
+        tvUserEmail.setOnClickListener(view -> {
+            String email = tvUserEmail.getText().toString();
+            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", email, null));
+            startActivity(Intent.createChooser(emailIntent, "Send email..."));
+        });
+
+        tvPhoneNumber.setOnClickListener(view -> {
+            String phone = tvPhoneNumber.getText().toString();
+            Intent phoneIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
+            startActivity(phoneIntent);
         });
     }
 }

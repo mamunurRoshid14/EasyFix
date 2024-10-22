@@ -1,6 +1,7 @@
 package com.example.easyfix;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -141,10 +142,17 @@ public class FindServiceProvider extends AppCompatActivity {
         userAdapter = new UserAdapter(nearbyUsers, new UserAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(UserAccount user) {
-                // Handle item click here
-                Toast.makeText(FindServiceProvider.this, "Clicked: " + user.getUserId(), Toast.LENGTH_SHORT).show();
+                // Create an Intent to start the ViewProfile activity
+                Intent intent = new Intent(FindServiceProvider.this, ViewProfile.class);
+
+                // Pass only the userId to the ViewProfile activity
+                intent.putExtra("userId", user.getUserId());
+
+                // Start the ViewProfile activity
+                startActivity(intent);
             }
         });
+
 
         recyclerViewUsers.setAdapter(userAdapter);
         userAdapter.notifyDataSetChanged();

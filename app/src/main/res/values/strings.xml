@@ -2,7 +2,7 @@
     <string name="app_name">EasyFix</string>
     <string-array name="type_of_service_array">
         <item>Plumbing</item>
-        <item>Electrical</item
+        <item>Electrical</item>
         <item>Cleaning</item>
         <item>Painting</item>
         <item>Pest Control Services</item>
@@ -15,7 +15,7 @@
     <string-array name="type_of_service_user">
         <item>Service Taker</item>
         <item>Plumbing</item>
-        <item>Electrical</item
+        <item>Electrical</item>
         <item>Cleaning</item>
         <item>Painting</item>
         <item>Pest Control Services</item>
