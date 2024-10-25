@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -35,7 +36,6 @@ import com.squareup.picasso.Picasso;
 
 public class UserProfileActivity extends AppCompatActivity {
 
-    private static final String TAG = "UserProfileActivity";
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 100;
 
@@ -55,6 +55,9 @@ public class UserProfileActivity extends AppCompatActivity {
     private double latitude;
     private double longitude;
     private String currentImageUrl;
+
+    // Define the ArrayAdapter as a member variable
+    private ArrayAdapter<CharSequence> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +80,12 @@ public class UserProfileActivity extends AppCompatActivity {
         buttonSave = findViewById(R.id.buttonSave);
         buttonUpdateLocation = findViewById(R.id.buttonUpdateLocation);
         spinnerTypeOfService = findViewById(R.id.spinnerTypeOfService);
+
+        // Set up the Spinner with array of service types
+        adapter = ArrayAdapter.createFromResource(this,
+                R.array.type_of_service_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerTypeOfService.setAdapter(adapter);
 
         imageViewProfilePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,10 +147,16 @@ public class UserProfileActivity extends AppCompatActivity {
                             currentImageUrl = user.getImageUrl();
                             latitude = user.getLatitude();
                             longitude = user.getLongitude();
-                            // Assuming spinner is set up to reflect the service type
-                            // Set spinner selection based on user.getTypeofService()
+
                             if (currentImageUrl != null) {
                                 Picasso.get().load(currentImageUrl).into(imageViewProfilePhoto);
+                            }
+
+                            // Set spinner selection based on user's service type
+                            String userTypeOfService = user.getTypeofService();
+                            if (userTypeOfService != null) {
+                                int spinnerPosition = adapter.getPosition(userTypeOfService);
+                                spinnerTypeOfService.setSelection(spinnerPosition);
                             }
                         }
                     } else {

@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="16dp"
-    android:padding="24dp"
-    app:cardCornerRadius="12dp">
+    android:layout_marginBottom="25dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
         android:orientation="vertical">
 
         <TableLayout
@@ -23,13 +25,18 @@
                     android:layout_height="wrap_content"
                     android:text="Name:"
                     android:textStyle="bold"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp"
+                    android:textColor="?attr/colorPrimary"/>
+
                 <TextView
                     android:id="@+id/tvUserName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp"
+                    android:background="?attr/selectableItemBackground"
+                    android:padding="8dp"
+                    android:textColor="?attr/colorSecondary"/>
             </TableRow>
 
             <TableRow>
@@ -38,13 +45,18 @@
                     android:layout_height="wrap_content"
                     android:text="Age:"
                     android:textStyle="bold"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp"
+                    android:textColor="?attr/colorPrimary"/>
+
                 <TextView
                     android:id="@+id/tvUserAge"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp"
+                    android:background="?attr/selectableItemBackground"
+                    android:padding="8dp"
+                    android:textColor="?attr/colorSecondary"/>
             </TableRow>
 
             <TableRow>
@@ -53,13 +65,18 @@
                     android:layout_height="wrap_content"
                     android:text="Type of Service:"
                     android:textStyle="bold"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp"
+                    android:textColor="?attr/colorPrimary"/>
+
                 <TextView
                     android:id="@+id/tvUserServiceType"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp"
+                    android:background="?attr/selectableItemBackground"
+                    android:padding="8dp"
+                    android:textColor="?attr/colorSecondary"/>
             </TableRow>
 
             <TableRow>
@@ -68,13 +85,18 @@
                     android:layout_height="wrap_content"
                     android:text="Mobile Number:"
                     android:textStyle="bold"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp"
+                    android:textColor="?attr/colorPrimary"/>
+
                 <TextView
                     android:id="@+id/tvUserPhone"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp"
+                    android:background="?attr/selectableItemBackground"
+                    android:padding="8dp"
+                    android:textColor="?attr/colorSecondary"/>
             </TableRow>
 
             <TableRow>
@@ -83,16 +105,20 @@
                     android:layout_height="wrap_content"
                     android:text="Location:"
                     android:textStyle="bold"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp"
+                    android:textColor="?attr/colorPrimary"/>
+
                 <TextView
                     android:id="@+id/tvUserLocation"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp"
+                    android:background="?attr/selectableItemBackground"
+                    android:padding="8dp"
+                    android:textColor="?attr/colorSecondary"/>
             </TableRow>
 
         </TableLayout>
-
     </LinearLayout>
 </androidx.cardview.widget.CardView>

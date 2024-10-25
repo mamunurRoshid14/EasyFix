@@ -23,8 +23,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
-
 public class DashboardActivity extends AppCompatActivity {
 
     private static final String TAG = "DashboardActivity";
@@ -54,9 +52,6 @@ public class DashboardActivity extends AppCompatActivity {
         tvAge = findViewById(R.id.tvAge);
         ivProfilePicture = findViewById(R.id.ivProfilePicture);
 
-        // Initialize new TextViews
-/*        tvLatitude = findViewById(R.id.tvLatitude);
-        tvLongitude = findViewById(R.id.tvLongitude);*/
         tvTypeOfService = findViewById(R.id.tvTypeOfService);
 
         if (currentUser != null) {
@@ -108,8 +103,6 @@ public class DashboardActivity extends AppCompatActivity {
                                     tvPhoneNumber.setText(user.getPhoneNumber());
                                     tvLocation.setText(user.getLocation());
                                     tvAge.setText(String.valueOf(user.getAge()));
-/*                                    tvLatitude.setText(String.valueOf(user.getLatitude())); // New field for latitude
-                                    tvLongitude.setText(String.valueOf(user.getLongitude())); // New field for longitude*/
                                     tvTypeOfService.setText(user.getTypeofService()); // New field for service type
                                     if (user.getImageUrl() != null) {
                                         Picasso.get().load(user.getImageUrl()).into(ivProfilePicture);

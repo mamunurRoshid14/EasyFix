@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
@@ -10,6 +11,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <!-- Edit Profile Title -->
         <TextView
             android:id="@+id/tvEditProfile"
             android:layout_width="wrap_content"
@@ -18,9 +20,10 @@
             android:text="Edit Profile"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="@android:color/black"
+            android:textColor="?attr/colorPrimary"
             android:layout_marginBottom="16dp" />
 
+        <!-- Profile Photo -->
         <com.example.easyfix.OvalImageView
             android:id="@+id/imageViewProfilePhoto"
             android:layout_width="200dp"
@@ -31,12 +34,14 @@
             android:scaleType="centerCrop"
             android:layout_marginBottom="16dp" />
 
+        <!-- Table Layout for User Details -->
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:stretchColumns="1"
             android:layout_marginBottom="16dp">
 
+            <!-- Full Name -->
             <TableRow>
                 <TextView
                     android:layout_width="wrap_content"
@@ -44,16 +49,21 @@
                     android:text="Full Name:"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="@android:color/black" />
-                <EditText
-                    android:id="@+id/editTextFullName"
+                    android:textColor="?attr/colorPrimary" />
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Full Name"
-                    android:inputType="textPersonName"
-                    android:textColor="@android:color/black" />
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextFullName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Full Name"
+                        android:inputType="textPersonName"
+                        android:textColor="@android:color/black" />
+                </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
 
+            <!-- Phone Number -->
             <TableRow>
                 <TextView
                     android:layout_width="wrap_content"
@@ -61,16 +71,21 @@
                     android:text="Phone Number:"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="@android:color/black" />
-                <EditText
-                    android:id="@+id/editTextPhoneNumber"
+                    android:textColor="?attr/colorPrimary" />
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Phone Number"
-                    android:inputType="phone"
-                    android:textColor="@android:color/black" />
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextPhoneNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Phone Number"
+                        android:inputType="phone"
+                        android:textColor="@android:color/black" />
+                </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
 
+            <!-- Email -->
             <TableRow>
                 <TextView
                     android:layout_width="wrap_content"
@@ -78,16 +93,21 @@
                     android:text="Email:"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="@android:color/black" />
-                <EditText
-                    android:id="@+id/editTextEmail"
+                    android:textColor="?attr/colorPrimary" />
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Email"
-                    android:inputType="textEmailAddress"
-                    android:textColor="@android:color/black" />
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Email"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@android:color/black" />
+                </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
 
+            <!-- Location -->
             <TableRow>
                 <TextView
                     android:layout_width="wrap_content"
@@ -95,16 +115,21 @@
                     android:text="Location:"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="@android:color/black" />
-                <EditText
-                    android:id="@+id/editTextLocation"
+                    android:textColor="?attr/colorPrimary" />
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Location"
-                    android:inputType="textPostalAddress"
-                    android:textColor="@android:color/black" />
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextLocation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Location"
+                        android:inputType="textPostalAddress"
+                        android:textColor="@android:color/black" />
+                </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
 
+            <!-- Age -->
             <TableRow>
                 <TextView
                     android:layout_width="wrap_content"
@@ -112,16 +137,21 @@
                     android:text="Age:"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="@android:color/black" />
-                <EditText
-                    android:id="@+id/editTextAge"
+                    android:textColor="?attr/colorPrimary" />
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Age"
-                    android:inputType="number"
-                    android:textColor="@android:color/black" />
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextAge"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Age"
+                        android:inputType="number"
+                        android:textColor="@android:color/black" />
+                </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
 
+            <!-- Type of Service -->
             <TableRow>
                 <TextView
                     android:layout_width="wrap_content"
@@ -129,30 +159,34 @@
                     android:text="Type of Service:"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="@android:color/black" />
+                    android:textColor="?attr/colorPrimary" />
                 <Spinner
                     android:id="@+id/spinnerTypeOfService"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:entries="@array/type_of_service_user" />
+                    android:entries="@array/type_of_service_user"
+                    android:background="@drawable/spinner_background"
+                    android:theme="@style/Widget.MaterialComponents.Spinner"/>
             </TableRow>
         </TableLayout>
 
-        <Button
+        <!-- Update Location Button -->
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonUpdateLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Update Location"
-            android:backgroundTint="@android:color/holo_blue_light"
-            android:textColor="@android:color/white"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp"
+            style="@style/Widget.MaterialComponents.Button"
+            app:cornerRadius="4dp" />
 
-        <Button
+        <!-- Save Button -->
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonSave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Save"
-            android:backgroundTint="@android:color/holo_blue_light"
-            android:textColor="@android:color/white" />
+            style="@style/Widget.MaterialComponents.Button"
+            app:cornerRadius="4dp" />
     </LinearLayout>
 </ScrollView>

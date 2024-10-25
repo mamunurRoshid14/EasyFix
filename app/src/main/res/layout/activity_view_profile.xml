@@ -1,4 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
@@ -8,6 +10,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
+        <!-- Welcome TextView with Material Design -->
         <TextView
             android:id="@+id/tvWelcome"
             android:layout_width="wrap_content"
@@ -17,8 +20,10 @@
             android:text="Welcome to EasyFix!"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="@android:color/black" />
+            android:textColor="?attr/colorPrimary"
+            android:fontFamily="sans-serif-medium"/>
 
+        <!-- Profile Picture with Material Design -->
         <com.example.easyfix.OvalImageView
             android:id="@+id/ivProfilePicture"
             android:layout_width="200dp"
@@ -28,8 +33,9 @@
             android:layout_marginTop="16dp"
             android:src="@drawable/default_profile_image"
             android:contentDescription="Profile Picture"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"/>
 
+        <!-- Linear Layout with Material Design -->
         <LinearLayout
             android:id="@+id/lenear"
             android:layout_width="match_parent"
@@ -38,25 +44,28 @@
             android:layout_marginTop="16dp"
             android:orientation="vertical"
             android:padding="16dp">
+
+            <!-- Bio TextView with Material Design -->
             <TextView
                 android:id="@+id/tvBio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="Bio"
                 android:textSize="15sp"
                 android:textStyle="bold"
-                android:textColor="@android:color/black"
+                android:textColor="?attr/colorPrimary"
                 android:layout_gravity="center"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:layout_marginBottom="15dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_marginBottom="15dp"/>
 
-            <!-- Full Name -->
+            <!-- Full Name LinearLayout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="8dp">
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -64,7 +73,8 @@
                     android:text="Name:"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="@android:color/black" />
+                    android:textColor="?attr/colorPrimary"/>
+
                 <TextView
                     android:id="@+id/tvFullName"
                     android:layout_width="0dp"
@@ -72,15 +82,16 @@
                     android:layout_weight="2"
                     android:text="Not Set"
                     android:textSize="16sp"
-                    android:textColor="@android:color/black" />
+                    android:textColor="?attr/colorSecondary"/>
             </LinearLayout>
 
-            <!-- Age -->
+            <!-- Age LinearLayout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="8dp">
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -88,7 +99,8 @@
                     android:text="Age:"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="@android:color/black" />
+                    android:textColor="?attr/colorPrimary"/>
+
                 <TextView
                     android:id="@+id/tvAge"
                     android:layout_width="0dp"
@@ -96,15 +108,16 @@
                     android:layout_weight="2"
                     android:text="Not Set"
                     android:textSize="16sp"
-                    android:textColor="@android:color/black" />
+                    android:textColor="?attr/colorSecondary"/>
             </LinearLayout>
 
-            <!-- Email -->
+            <!-- Email LinearLayout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="8dp">
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -112,7 +125,8 @@
                     android:text="Email:"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="@android:color/black" />
+                    android:textColor="?attr/colorPrimary"/>
+
                 <TextView
                     android:id="@+id/tvUserEmail"
                     android:layout_width="0dp"
@@ -120,15 +134,16 @@
                     android:layout_weight="2"
                     android:text="Not Set"
                     android:textSize="16sp"
-                    android:textColor="@android:color/black" />
+                    android:textColor="?attr/colorSecondary"/>
             </LinearLayout>
 
-            <!-- Phone Number -->
+            <!-- Phone Number LinearLayout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="8dp">
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -136,7 +151,8 @@
                     android:text="Phone:"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="@android:color/black" />
+                    android:textColor="?attr/colorPrimary"/>
+
                 <TextView
                     android:id="@+id/tvPhoneNumber"
                     android:layout_width="0dp"
@@ -144,15 +160,16 @@
                     android:layout_weight="2"
                     android:text="Not Set"
                     android:textSize="16sp"
-                    android:textColor="@android:color/black" />
+                    android:textColor="?attr/colorSecondary"/>
             </LinearLayout>
 
-            <!-- Location -->
+            <!-- Location LinearLayout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="8dp">
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -160,7 +177,8 @@
                     android:text="Location:"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="@android:color/black" />
+                    android:textColor="?attr/colorPrimary"/>
+
                 <TextView
                     android:id="@+id/tvLocation"
                     android:layout_width="0dp"
@@ -168,15 +186,16 @@
                     android:layout_weight="2"
                     android:text="Not Set"
                     android:textSize="16sp"
-                    android:textColor="@android:color/black" />
+                    android:textColor="?attr/colorSecondary"/>
             </LinearLayout>
 
-            <!-- Type of Service -->
+            <!-- Type of Service LinearLayout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="8dp">
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -184,7 +203,8 @@
                     android:text="Service Type:"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="@android:color/black" />
+                    android:textColor="?attr/colorPrimary"/>
+
                 <TextView
                     android:id="@+id/tvTypeOfService"
                     android:layout_width="0dp"
@@ -192,10 +212,9 @@
                     android:layout_weight="2"
                     android:text="Not Set"
                     android:textSize="16sp"
-                    android:textColor="@android:color/black" />
+                    android:textColor="?attr/colorSecondary"/>
             </LinearLayout>
 
         </LinearLayout>
-
     </RelativeLayout>
 </ScrollView>
