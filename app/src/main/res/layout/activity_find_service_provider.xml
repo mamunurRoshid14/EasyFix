@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
@@ -8,40 +9,72 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
+        <!-- Welcome Text with MaterialTextView -->
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvWelcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Welcome to EasyFix"
             android:textSize="24sp"
             android:textStyle="bold"
+            android:textColor="?attr/colorPrimary"
+            android:fontFamily="sans-serif-medium"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="24dp"/>
+            android:layout_marginBottom="24dp" />
 
-        <Spinner
-            android:id="@+id/spinnerTypeOfService"
+        <!-- Type of Service Dropdown with MaterialAutoCompleteTextView -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilTypeOfService"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/type_of_service_array"
-            android:layout_below="@id/tvWelcome"/>
+            android:layout_below="@id/tvWelcome"
+            android:layout_marginTop="16dp"
+            android:hint="Type of Service"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="?attr/colorPrimary">
 
-        <EditText
-            android:id="@+id/etRadius"
+            <Spinner
+                android:id="@+id/spinnerTypeOfService"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/type_of_service_array"
+                android:background="@drawable/spinner_background"
+                android:theme="@style/Widget.MaterialComponents.Spinner"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Radius EditText with Material Design -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/tilTypeOfService"
+            android:layout_marginTop="16dp"
             android:hint="Radius (Default is 10 km)"
-            android:layout_below="@id/spinnerTypeOfService"
-            android:inputType="number"
-            android:layout_marginTop="16dp"/>
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="?attr/colorPrimary">
 
-        <Button
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etRadius"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Find Button with Material Design -->
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnFind"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Find"
             android:layout_below="@id/etRadius"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="230dp"
+            app:cornerRadius="8dp"
+            app:iconGravity="textStart"
+            app:strokeColor="?attr/colorPrimary"
+            app:strokeWidth="1dp"
+            android:backgroundTint="?attr/colorPrimary"
+            android:textColor="@android:color/white" />
 
+        <!-- RecyclerView with Material Card Style -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewUsers"
             android:layout_width="match_parent"
@@ -49,15 +82,15 @@
             android:layout_below="@id/btnFind"
             android:layout_marginTop="16dp"
             android:clipToPadding="false"
-            android:paddingBottom="16dp"/>
+            android:paddingBottom="16dp" />
 
-        <!-- ProgressBar added here -->
+        <!-- ProgressBar -->
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:visibility="gone"/> <!-- Initially hidden -->
+            android:visibility="gone" /> <!-- Initially hidden -->
 
     </RelativeLayout>
 </ScrollView>

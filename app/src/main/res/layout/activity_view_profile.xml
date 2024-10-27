@@ -11,7 +11,7 @@
         android:padding="16dp">
 
         <!-- Welcome TextView with Material Design -->
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvWelcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -21,200 +21,217 @@
             android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="?attr/colorPrimary"
-            android:fontFamily="sans-serif-medium"/>
+            android:fontFamily="sans-serif-medium" />
 
         <!-- Profile Picture with Material Design -->
-        <com.example.easyfix.OvalImageView
-            android:id="@+id/ivProfilePicture"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/profileCard"
             android:layout_width="200dp"
             android:layout_height="220dp"
             android:layout_below="@id/tvWelcome"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
-            android:src="@drawable/default_profile_image"
-            android:contentDescription="Profile Picture"
-            android:scaleType="centerCrop"/>
+            app:cardCornerRadius="100dp"
+            app:cardElevation="8dp"
+            app:strokeColor="?attr/colorPrimary"
+            app:strokeWidth="2dp">
 
-        <!-- Linear Layout with Material Design -->
-        <LinearLayout
-            android:id="@+id/lenear"
+            <com.example.easyfix.OvalImageView
+                android:id="@+id/ivProfilePicture"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/default_profile_image"
+                android:contentDescription="Profile Picture"
+                android:scaleType="centerCrop" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Information Card with Material Design -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ivProfilePicture"
+            android:layout_below="@id/profileCard"
             android:layout_marginTop="16dp"
-            android:orientation="vertical"
-            android:padding="16dp">
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
 
-            <!-- Bio TextView with Material Design -->
-            <TextView
-                android:id="@+id/tvBio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Bio"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:textColor="?attr/colorPrimary"
-                android:layout_gravity="center"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:layout_marginBottom="15dp"/>
-
-            <!-- Full Name LinearLayout -->
             <LinearLayout
+                android:id="@+id/lenear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="8dp">
+                android:orientation="vertical"
+                android:padding="16dp">
 
-                <TextView
-                    android:layout_width="0dp"
+                <!-- Bio TextView with Material Design -->
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvBio"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Name:"
-                    android:textSize="16sp"
+                    android:text="Bio"
+                    android:textSize="18sp"
                     android:textStyle="bold"
-                    android:textColor="?attr/colorPrimary"/>
+                    android:textColor="?attr/colorPrimary"
+                    android:layout_gravity="center"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:layout_marginBottom="15dp" />
 
-                <TextView
-                    android:id="@+id/tvFullName"
-                    android:layout_width="0dp"
+                <!-- Full Name LinearLayout -->
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="Not Set"
-                    android:textSize="16sp"
-                    android:textColor="?attr/colorSecondary"/>
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Name:"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="?attr/colorPrimary" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvFullName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="Not Set"
+                        android:textSize="16sp"
+                        android:textColor="?attr/colorSecondary" />
+                </LinearLayout>
+
+                <!-- Age LinearLayout -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Age:"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="?attr/colorPrimary" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvAge"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="Not Set"
+                        android:textSize="16sp"
+                        android:textColor="?attr/colorSecondary" />
+                </LinearLayout>
+
+                <!-- Email LinearLayout -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Email:"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="?attr/colorPrimary" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvUserEmail"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="Not Set"
+                        android:textSize="16sp"
+                        android:textColor="?attr/colorSecondary" />
+                </LinearLayout>
+
+                <!-- Phone Number LinearLayout -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Phone:"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="?attr/colorPrimary" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvPhoneNumber"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="Not Set"
+                        android:textSize="16sp"
+                        android:textColor="?attr/colorSecondary" />
+                </LinearLayout>
+
+                <!-- Location LinearLayout -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Location:"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="?attr/colorPrimary" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvLocation"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="Not Set"
+                        android:textSize="16sp"
+                        android:textColor="?attr/colorSecondary" />
+                </LinearLayout>
+
+                <!-- Type of Service LinearLayout -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Service Type:"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="?attr/colorPrimary" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvTypeOfService"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="Not Set"
+                        android:textSize="16sp"
+                        android:textColor="?attr/colorSecondary" />
+                </LinearLayout>
+
             </LinearLayout>
-
-            <!-- Age LinearLayout -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Age:"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="?attr/colorPrimary"/>
-
-                <TextView
-                    android:id="@+id/tvAge"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="Not Set"
-                    android:textSize="16sp"
-                    android:textColor="?attr/colorSecondary"/>
-            </LinearLayout>
-
-            <!-- Email LinearLayout -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Email:"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="?attr/colorPrimary"/>
-
-                <TextView
-                    android:id="@+id/tvUserEmail"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="Not Set"
-                    android:textSize="16sp"
-                    android:textColor="?attr/colorSecondary"/>
-            </LinearLayout>
-
-            <!-- Phone Number LinearLayout -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Phone:"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="?attr/colorPrimary"/>
-
-                <TextView
-                    android:id="@+id/tvPhoneNumber"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="Not Set"
-                    android:textSize="16sp"
-                    android:textColor="?attr/colorSecondary"/>
-            </LinearLayout>
-
-            <!-- Location LinearLayout -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Location:"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="?attr/colorPrimary"/>
-
-                <TextView
-                    android:id="@+id/tvLocation"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="Not Set"
-                    android:textSize="16sp"
-                    android:textColor="?attr/colorSecondary"/>
-            </LinearLayout>
-
-            <!-- Type of Service LinearLayout -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Service Type:"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="?attr/colorPrimary"/>
-
-                <TextView
-                    android:id="@+id/tvTypeOfService"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="Not Set"
-                    android:textSize="16sp"
-                    android:textColor="?attr/colorSecondary"/>
-            </LinearLayout>
-
-        </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
     </RelativeLayout>
 </ScrollView>
