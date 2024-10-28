@@ -7,23 +7,20 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -33,16 +30,17 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+import android.widget.ImageView;
+
 
 public class UserProfileActivity extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 100;
 
-    private EditText editTextFullName, editTextPhoneNumber, editTextEmail, editTextLocation, editTextAge;
-    private ImageView imageViewProfilePhoto;
+    private TextInputEditText editTextFullName, editTextPhoneNumber, editTextEmail, editTextLocation, editTextAge, editTextBio;
     private Spinner spinnerTypeOfService;
-    private Button buttonSave, buttonUpdateLocation;
+    private MaterialButton buttonSave, buttonUpdateLocation;
     private Uri imageUri;
 
     private FirebaseAuth mAuth;
@@ -55,8 +53,6 @@ public class UserProfileActivity extends AppCompatActivity {
     private double latitude;
     private double longitude;
     private String currentImageUrl;
-
-    // Define the ArrayAdapter as a member variable
     private ArrayAdapter<CharSequence> adapter;
 
     @Override
@@ -76,10 +72,10 @@ public class UserProfileActivity extends AppCompatActivity {
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextLocation = findViewById(R.id.editTextLocation);
         editTextAge = findViewById(R.id.editTextAge);
-        imageViewProfilePhoto = findViewById(R.id.imageViewProfilePhoto);
+        editTextBio = findViewById(R.id.editTextBio);
+        spinnerTypeOfService = findViewById(R.id.spinnerTypeOfService);
         buttonSave = findViewById(R.id.buttonSave);
         buttonUpdateLocation = findViewById(R.id.buttonUpdateLocation);
-        spinnerTypeOfService = findViewById(R.id.spinnerTypeOfService);
 
         // Set up the Spinner with array of service types
         adapter = ArrayAdapter.createFromResource(this,
@@ -87,13 +83,15 @@ public class UserProfileActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTypeOfService.setAdapter(adapter);
 
-        imageViewProfilePhoto.setOnClickListener(new View.OnClickListener() {
+        // Load Profile Photo if available
+        findViewById(R.id.imageViewProfilePhoto).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openFileChooser();
             }
         });
 
+        // Update Location Button
         buttonUpdateLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,10 +99,12 @@ public class UserProfileActivity extends AppCompatActivity {
             }
         });
 
+        // Fetch user profile if user is logged in
         if (currentUser != null) {
             fetchUserProfile(currentUser.getUid());
         }
 
+        // Save button to save the profile
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,7 +125,7 @@ public class UserProfileActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imageUri = data.getData();
-            Picasso.get().load(imageUri).into(imageViewProfilePhoto);
+            Picasso.get().load(imageUri).into((ImageView) findViewById(R.id.imageViewProfilePhoto));
         }
     }
 
@@ -140,6 +140,7 @@ public class UserProfileActivity extends AppCompatActivity {
                         UserAccount user = document.toObject(UserAccount.class);
                         if (user != null) {
                             editTextFullName.setText(user.getFullName());
+                            editTextBio.setText(user.getBio());
                             editTextPhoneNumber.setText(user.getPhoneNumber());
                             editTextEmail.setText(currentUser.getEmail());
                             editTextLocation.setText(user.getLocation());
@@ -149,7 +150,7 @@ public class UserProfileActivity extends AppCompatActivity {
                             longitude = user.getLongitude();
 
                             if (currentImageUrl != null) {
-                                Picasso.get().load(currentImageUrl).into(imageViewProfilePhoto);
+                                Picasso.get().load(currentImageUrl).into((ImageView) findViewById(R.id.imageViewProfilePhoto));
                             }
 
                             // Set spinner selection based on user's service type
@@ -168,6 +169,7 @@ public class UserProfileActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void updateLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -197,8 +199,8 @@ public class UserProfileActivity extends AppCompatActivity {
     private void saveUserProfile() {
         String fullName = editTextFullName.getText().toString();
         String phoneNumber = editTextPhoneNumber.getText().toString();
-        String email = editTextEmail.getText().toString();
         String location = editTextLocation.getText().toString();
+        String bio = editTextBio.getText().toString();
         int age = Integer.parseInt(editTextAge.getText().toString());
         String typeofService = spinnerTypeOfService.getSelectedItem().toString();
 
@@ -211,7 +213,7 @@ public class UserProfileActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Uri uri) {
                             String imageUrl = uri.toString();
-                            updateUserProfile(fullName, phoneNumber, email, location, age, latitude, longitude, typeofService, imageUrl);
+                            updateUserProfile(fullName, phoneNumber, location, age, bio, latitude, longitude, typeofService, imageUrl);
                         }
                     });
                 }
@@ -222,26 +224,21 @@ public class UserProfileActivity extends AppCompatActivity {
                 }
             });
         } else {
-            updateUserProfile(fullName, phoneNumber, email, location, age, latitude, longitude, typeofService, currentImageUrl);
+            updateUserProfile(fullName, phoneNumber, location, age, bio, latitude, longitude, typeofService, currentImageUrl);
         }
     }
 
-    private void updateUserProfile(String fullName, String phoneNumber, String email, String location, int age, double latitude, double longitude, String typeofService, String imageUrl) {
-        UserAccount user = new UserAccount(fullName, phoneNumber, currentUser.getUid(), imageUrl, location, age, latitude, longitude, typeofService);
+    private void updateUserProfile(String fullName, String phoneNumber, String location, int age, String bio,
+                                   double latitude, double longitude, String typeofService, String imageUrl) {
+        UserAccount user = new UserAccount(fullName, bio, phoneNumber, currentUser.getUid(), imageUrl, location, age,
+                latitude, longitude, typeofService, 0, 0);
 
-        db.collection("users").document(currentUser.getUid()).set(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(UserProfileActivity.this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(UserProfileActivity.this, "Failed to update profile", Toast.LENGTH_SHORT).show();
-                }
-                Intent intent = new Intent(UserProfileActivity.this, DashboardActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                finish();
-            }
-        });
+        db.collection("users").document(currentUser.getUid()).set(user)
+                .addOnSuccessListener(aVoid -> Toast.makeText(UserProfileActivity.this, "Profile updated successfully", Toast.LENGTH_SHORT).show())
+                .addOnFailureListener(e -> Toast.makeText(UserProfileActivity.this, "Failed to update profile", Toast.LENGTH_SHORT).show());
+        Intent intent = new Intent(UserProfileActivity.this, DashboardActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 }

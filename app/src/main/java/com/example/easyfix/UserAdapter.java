@@ -3,6 +3,7 @@ package com.example.easyfix;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,6 +34,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         holder.tvUserServiceType.setText(user.getTypeofService());
         holder.tvUserPhone.setText(user.getPhoneNumber());
         holder.tvUserLocation.setText(user.getLocation());
+        holder.ratingBar.setRating((float)(user.getRating()/2.0));
         holder.bind(userList.get(position), onItemClickListener);
     }
 
@@ -43,6 +45,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     public static class UserViewHolder extends RecyclerView.ViewHolder {
         TextView tvUserName, tvUserAge, tvUserServiceType, tvUserPhone, tvUserLocation;
+        RatingBar ratingBar;
 
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -51,6 +54,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             tvUserServiceType = itemView.findViewById(R.id.tvUserServiceType);
             tvUserPhone = itemView.findViewById(R.id.tvUserPhone);
             tvUserLocation = itemView.findViewById(R.id.tvUserLocation);
+            ratingBar = itemView.findViewById(R.id.ratingBar);
         }
 
         public void bind(final UserAccount user, final OnItemClickListener listener) {

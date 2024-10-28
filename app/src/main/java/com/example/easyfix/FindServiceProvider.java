@@ -29,6 +29,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class FindServiceProvider extends AppCompatActivity {
@@ -143,6 +145,13 @@ public class FindServiceProvider extends AppCompatActivity {
                 nearbyUsers.add(user);
             }
         }
+
+        Collections.sort(nearbyUsers, new Comparator<UserAccount>() {
+            @Override
+            public int compare(UserAccount u1, UserAccount u2) {
+                return Double.compare(u2.getRating(), u1.getRating()); // Higher rating first
+            }
+        });
 
         // Update the RecyclerView with the filtered user list
         userAdapter = new UserAdapter(nearbyUsers, new UserAdapter.OnItemClickListener() {

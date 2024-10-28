@@ -15,7 +15,7 @@ import com.squareup.picasso.Picasso;
 
 public class ViewProfile extends AppCompatActivity {
     private static final String TAG = "ViewProfile";
-    private TextView tvFullName, tvAge, tvUserEmail, tvPhoneNumber, tvLocation, tvTypeOfService, tvBio;
+    private TextView tvFullName, tvAge, tvUserEmail, tvPhoneNumber, tvLocation, tvTypeOfService, tvBio, tvNumberOfOrder, tvRating;
     private ImageView ivProfilePicture;
 
     @Override
@@ -31,6 +31,8 @@ public class ViewProfile extends AppCompatActivity {
         tvTypeOfService = findViewById(R.id.tvTypeOfService);
         ivProfilePicture = findViewById(R.id.ivProfilePicture);
         tvBio = findViewById(R.id.tvBio);
+        tvNumberOfOrder = findViewById(R.id.tvNumberOfOrder);
+        tvRating = findViewById(R.id.tvRating);
 
         // Get the userId from the Intent
         Intent intent = getIntent();
@@ -59,6 +61,8 @@ public class ViewProfile extends AppCompatActivity {
                     tvLocation.setText(document.getString("location"));
                     tvTypeOfService.setText(document.getString("typeofService"));
                     tvBio.setText(document.getString("bio"));
+                    tvNumberOfOrder.setText(String.valueOf(document.getLong("number_of_orders")));
+                    tvRating.setText(String.valueOf(document.getDouble("rating")));
 
                     // Load profile image using Picasso or any other image loading library
                     String imageUrl = document.getString("imageUrl");
