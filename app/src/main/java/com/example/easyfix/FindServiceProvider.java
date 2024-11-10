@@ -11,8 +11,10 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,6 +46,7 @@ public class FindServiceProvider extends AppCompatActivity {
     private FirebaseFirestore db;
     private ProgressBar progressBar;
     private Spinner spinnerTypeOfService;
+    private ImageView electrician, plumber, painting, insect, airconditioner, gardener, cleaner, animalCare;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +58,14 @@ public class FindServiceProvider extends AppCompatActivity {
         recyclerViewUsers = findViewById(R.id.recyclerViewUsers);
         progressBar = findViewById(R.id.progressBar);
         spinnerTypeOfService = findViewById(R.id.spinnerTypeOfService); // Initialize Spinner
+        electrician = findViewById(R.id.electrician);
+        plumber = findViewById(R.id.plumber);
+        painting = findViewById(R.id.painting);
+        insect = findViewById(R.id.insecticide);
+        gardener = findViewById(R.id.gardening);
+        airconditioner = findViewById(R.id.airconditioner);
+        cleaner = findViewById(R.id.cleaning);
+        animalCare = findViewById(R.id.animalcare);
 
         recyclerViewUsers.setLayoutManager(new LinearLayoutManager(this));
 
@@ -77,7 +88,32 @@ public class FindServiceProvider extends AppCompatActivity {
                 }
             }
         });
+
+        plumber.setOnClickListener(new ServiceClickListener(0)); // Plumbing
+        electrician.setOnClickListener(new ServiceClickListener(1)); // Electrical
+        cleaner.setOnClickListener(new ServiceClickListener(2)); // Cleaning
+        painting.setOnClickListener(new ServiceClickListener(3)); // Painting
+        insect.setOnClickListener(new ServiceClickListener(4)); // Pest Control Services
+        airconditioner.setOnClickListener(new ServiceClickListener(6)); // AC Servicing and Repair
+        animalCare.setOnClickListener(new ServiceClickListener(7)); // Pet Care Services
+        gardener.setOnClickListener(new ServiceClickListener(8)); // Gardening Services
+
     }
+    // Custom OnClickListener class
+    private class ServiceClickListener implements View.OnClickListener {
+        private final int serviceTypeIndex;
+
+        public ServiceClickListener(int serviceTypeIndex) {
+            this.serviceTypeIndex = serviceTypeIndex;
+        }
+
+        @Override
+        public void onClick(View v) {
+            spinnerTypeOfService.setSelection(serviceTypeIndex); // Set spinner selection
+            btnFind.performClick(); // Trigger btnFind click to start the search
+        }
+    }
+
 
     private void fetchUsersFromFirestore() {
         CollectionReference usersRef = db.collection("users");
@@ -132,7 +168,7 @@ public class FindServiceProvider extends AppCompatActivity {
         try {
             radiusKm = Integer.parseInt(etRadius.getText().toString());
         } catch (NumberFormatException e) {
-            radiusKm = 10; // Default value
+            radiusKm = 30; // Default value
         }
 
         String selectedServiceType = spinnerTypeOfService.getSelectedItem().toString(); // Get selected service type

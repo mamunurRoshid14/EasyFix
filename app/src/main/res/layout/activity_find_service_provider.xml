@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tilTypeOfService"
             android:layout_marginTop="16dp"
-            android:hint="Radius (Default is 10 km)"
+            android:hint="Radius (Default is 30 km)"
             app:boxBackgroundMode="outline"
             app:boxStrokeColor="?attr/colorPrimary">
 
@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:text="Find"
             android:layout_below="@id/etRadius"
-            android:layout_marginTop="230dp"
+            android:layout_marginTop="210dp"
             app:cornerRadius="8dp"
             app:iconGravity="textStart"
             app:strokeColor="?attr/colorPrimary"
@@ -74,12 +74,313 @@
             android:backgroundTint="?attr/colorPrimary"
             android:textColor="@android:color/white" />
 
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/lineaarimageview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_below="@id/btnFind"
+            android:padding="8dp">
+
+            <!-- First Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <!-- Image 1 Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="4dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:id="@+id/electrician"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@drawable/electrician"
+                            android:contentDescription="Electrician" />
+
+                        <TextView
+                            android:id="@+id/image1Name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Electrician"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                            android:gravity="center"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Repeat for other images -->
+
+                <!-- Image 2 Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="4dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:id="@+id/plumber"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@drawable/plumber"
+                            android:contentDescription="Image 2" />
+
+                        <TextView
+                            android:id="@+id/image2Name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Plumber"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                            android:gravity="center"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Image 3 Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="4dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:id="@+id/painting"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@drawable/painting"
+                            android:contentDescription="Image 3" />
+
+                        <TextView
+                            android:id="@+id/image3Name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Painting"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                            android:gravity="center"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Image 4 Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="4dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:id="@+id/insecticide"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@drawable/insecticide"
+                            android:contentDescription="Image 4" />
+
+                        <TextView
+                            android:id="@+id/image4Name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Insecticide"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                            android:gravity="center"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+            <!-- Second Row with Image 5, Image 6, Image 7, and Image 8 in similar pattern -->
+            <!-- Second Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <!-- Image 5 Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="4dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:id="@+id/gardening"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@drawable/gardening"
+                            android:contentDescription="Image 5" />
+
+                        <TextView
+                            android:id="@+id/image5Name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Gardening"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                            android:gravity="center"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Repeat for other images -->
+
+                <!-- Image 6 Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="4dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:id="@+id/airconditioner"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@drawable/airconditioner"
+                            android:contentDescription="Image 6" />
+
+                        <TextView
+                            android:id="@+id/image6Name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="AC Service"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                            android:gravity="center"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Image 7 Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="4dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:id="@+id/animalcare"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@drawable/animalcare"
+                            android:contentDescription="Image 7" />
+
+                        <TextView
+                            android:id="@+id/image7Name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Part Care"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                            android:gravity="center"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Image 8 Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="4dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:id="@+id/cleaning"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@drawable/cleaning"
+                            android:contentDescription="Image 8" />
+
+                        <TextView
+                            android:id="@+id/image1Name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cleaning"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                            android:gravity="center"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
         <!-- RecyclerView with Material Card Style -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewUsers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/btnFind"
+            android:layout_below="@id/lineaarimageview"
             android:layout_marginTop="16dp"
             android:clipToPadding="false"
             android:paddingBottom="16dp" />
