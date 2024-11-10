@@ -5,9 +5,19 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+            <!-- Menu Icon (three horizontal lines) -->
+            <ImageView
+                android:id="@+id/menu_icon"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_menu"
+                android:contentDescription="Menu icon"
+                android:layout_gravity="start"/>
 
         <!-- Welcome Text with MaterialTextView -->
         <com.google.android.material.textview.MaterialTextView

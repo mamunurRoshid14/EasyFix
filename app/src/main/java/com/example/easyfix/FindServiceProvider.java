@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -18,9 +19,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.easyfix.Auth.LoginActivity;
+import com.example.easyfix.Auth.SignupActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -46,7 +51,7 @@ public class FindServiceProvider extends AppCompatActivity {
     private FirebaseFirestore db;
     private ProgressBar progressBar;
     private Spinner spinnerTypeOfService;
-    private ImageView electrician, plumber, painting, insect, airconditioner, gardener, cleaner, animalCare;
+    private ImageView electrician, plumber, painting, insect, airconditioner, gardener, cleaner, animalCare, menuIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +71,7 @@ public class FindServiceProvider extends AppCompatActivity {
         airconditioner = findViewById(R.id.airconditioner);
         cleaner = findViewById(R.id.cleaning);
         animalCare = findViewById(R.id.animalcare);
+        menuIcon = findViewById(R.id.menu_icon);
 
         recyclerViewUsers.setLayoutManager(new LinearLayoutManager(this));
 
@@ -86,6 +92,13 @@ public class FindServiceProvider extends AppCompatActivity {
                 } else {
                     fetchUsersFromFirestore(); // Fetch users only when button is clicked
                 }
+            }
+        });
+
+        menuIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopupMenu(v); // Show the menu when the icon is clicked
             }
         });
 
@@ -112,6 +125,39 @@ public class FindServiceProvider extends AppCompatActivity {
             spinnerTypeOfService.setSelection(serviceTypeIndex); // Set spinner selection
             btnFind.performClick(); // Trigger btnFind click to start the search
         }
+    }
+
+    // Method to show the popup menu
+    private void showPopupMenu(View anchor) {
+        PopupMenu popupMenu = new PopupMenu(this, anchor);
+        popupMenu.getMenuInflater().inflate(R.menu.menu_options, popupMenu.getMenu()); // Inflate the menu
+
+        // Handle menu item clicks
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                CharSequence itemTitle = item.getTitle();
+
+                if (itemTitle.equals("Login")) {
+                    // Handle Login
+                    Intent intent = new Intent(FindServiceProvider.this, LoginActivity.class);
+                    startActivity(intent);
+                    return true;
+                } else if (itemTitle.equals("Signup")) {
+                    // Handle Signup
+                    Intent intent = new Intent(FindServiceProvider.this, SignupActivity.class);
+                    startActivity(intent);
+                    return true;
+                } else if (itemTitle.equals("About Us")) {
+                    // Handle About Us
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
+        popupMenu.show(); // Display the popup menu
     }
 
 
