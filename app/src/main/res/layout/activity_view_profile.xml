@@ -283,7 +283,16 @@
                         android:textColor="?attr/colorSecondary" />
                 </LinearLayout>
 
-
+                <Button
+                    android:id="@+id/btnViewReview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="View Reviews" />
+                <Button
+                    android:id="@+id/btnPlaceOrder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Place Order" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
     </RelativeLayout>

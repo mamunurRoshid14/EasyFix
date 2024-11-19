@@ -1,7 +1,6 @@
 package com.example.easyfix;
 
 public class Order {
-    private String orderId;
     private String orderFrom;
     private String orderTo;
     private Boolean confirmed;
@@ -9,14 +8,6 @@ public class Order {
     private double rating;
     private String serviceType;
 
-    // Getter and Setter for orderId
-    public String getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
-    }
 
     // Getter and Setter for orderFrom
     public String getOrderFrom() {

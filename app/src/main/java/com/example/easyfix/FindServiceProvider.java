@@ -243,10 +243,14 @@ public class FindServiceProvider extends AppCompatActivity {
                 Intent intent = new Intent(FindServiceProvider.this, ViewProfile.class);
 
                 // Pass only the userId to the ViewProfile activity
-                intent.putExtra("userId", user.getUserId());
+                String userid=user.getUserId();
+                intent.putExtra("userId", userid);
 
                 // Start the ViewProfile activity
                 startActivity(intent);
+
+               // Toast.makeText(FindServiceProvider.this, user.getUserId() + " clikced", Toast.LENGTH_SHORT).show();
+
             }
         });
 

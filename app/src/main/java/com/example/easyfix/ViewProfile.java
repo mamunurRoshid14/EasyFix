@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,12 +14,15 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class ViewProfile extends AppCompatActivity {
     private static final String TAG = "ViewProfile";
     private TextView tvFullName, tvAge, tvUserEmail, tvPhoneNumber, tvLocation, tvTypeOfService, tvBio, tvNumberOfOrder, tvRating;
     private ImageView ivProfilePicture;
-
+    private Button btnViewReviews, btnPlaceOrder;
+    private String toUser, servicetype;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,10 +38,22 @@ public class ViewProfile extends AppCompatActivity {
         tvBio = findViewById(R.id.tvBio);
         tvNumberOfOrder = findViewById(R.id.tvNumberOfOrder);
         tvRating = findViewById(R.id.tvRating);
+        btnViewReviews = findViewById(R.id.btnViewReview);
+        btnPlaceOrder = findViewById(R.id.btnPlaceOrder);
+
 
         // Get the userId from the Intent
         Intent intent = getIntent();
         String userId = intent.getStringExtra("userId");
+        toUser = userId;
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        // Get the current user
+        FirebaseUser currentUser = auth.getCurrentUser();
+        if(currentUser != null && currentUser.getUid().equals(userId)){
+            btnPlaceOrder.setVisibility(View.GONE);
+            btnViewReviews.setVisibility(View.GONE);
+        }
 
         // Fetch data from Firestore
         fetchUserData(userId);
@@ -63,7 +80,7 @@ public class ViewProfile extends AppCompatActivity {
                     tvBio.setText(document.getString("bio"));
                     tvNumberOfOrder.setText(String.valueOf(document.getLong("number_of_orders")));
                     tvRating.setText(String.valueOf(document.getDouble("rating")));
-
+                    servicetype = document.getString("typeofService");
                     // Load profile image using Picasso or any other image loading library
                     String imageUrl = document.getString("imageUrl");
                     if (imageUrl != null && !imageUrl.isEmpty()) {
@@ -93,6 +110,42 @@ public class ViewProfile extends AppCompatActivity {
             String phone = tvPhoneNumber.getText().toString();
             Intent phoneIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
             startActivity(phoneIntent);
+        });
+
+        btnPlaceOrder.setOnClickListener(view -> {
+            // Initialize Firestore and Auth
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+
+            // Get the current user
+            FirebaseUser currentUser = auth.getCurrentUser();
+            if (currentUser == null) {
+                // Show error if no user is logged in
+                Toast.makeText(getApplicationContext(), "User not logged in!", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            // Create an Order object
+            Order order = new Order();
+            order.setOrderFrom(currentUser.getUid()); // Set UID of the current user
+            order.setOrderTo(toUser); // Example value, replace with real data
+            order.setConfirmed(false);
+            order.setReview("Not Given Yet"); // Default review
+            order.setRating(0.0); // Default rating
+            order.setServiceType(servicetype); // Example value, replace with real data
+
+            // Push to Firestore
+            db.collection("orders")
+                    .document()
+                    .set(order)
+                    .addOnSuccessListener(aVoid -> {
+                        // Success message
+                        Toast.makeText(getApplicationContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
+                    })
+                    .addOnFailureListener(e -> {
+                        // Error message
+                        Toast.makeText(getApplicationContext(), "Error placing order: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    });
         });
     }
 }
