@@ -79,7 +79,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         // Set up the Spinner with array of service types
         adapter = ArrayAdapter.createFromResource(this,
-                R.array.type_of_service_array, android.R.layout.simple_spinner_item);
+                R.array.type_of_service_user, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTypeOfService.setAdapter(adapter);
 
