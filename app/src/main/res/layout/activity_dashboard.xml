@@ -49,6 +49,36 @@
                 android:textColor="@color/white"
                 app:backgroundTint="@color/purple_500" />
 
+            <!-- View Review  History -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_view_review_history"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_margin="8dp"
+                android:layout_columnWeight="1"
+                android:text="View Review History"
+                app:cornerRadius="8dp"
+                app:icon="@drawable/ic_view_profile"
+                app:iconPadding="8dp"
+                app:iconTint="@color/white"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/purple_500" />
+
+            <!-- Give Rating and Review -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_give_rating"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_margin="8dp"
+                android:layout_columnWeight="1"
+                android:text="Give Rating and Review"
+                app:cornerRadius="8dp"
+                app:icon="@drawable/ic_view_profile"
+                app:iconPadding="8dp"
+                app:iconTint="@color/white"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/purple_500" />
+
             <!-- View Profile Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_view_profile"

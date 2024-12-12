@@ -3,11 +3,12 @@ package com.example.easyfix;
 public class Order {
     private String orderFrom;
     private String orderTo;
-    private Boolean confirmed;
+    private Boolean confirmed=false;
+    private boolean isReviewed=false;
     private String review;
     private double rating;
     private String serviceType;
-
+    private String orderId;
 
     // Getter and Setter for orderFrom
     public String getOrderFrom() {
@@ -61,5 +62,21 @@ public class Order {
 
     public void setServiceType(String serviceType) {
         this.serviceType = serviceType;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public boolean isReviewed() {
+        return isReviewed;
+    }
+
+    public void setReviewed(boolean reviewed) {
+        isReviewed = reviewed;
     }
 }

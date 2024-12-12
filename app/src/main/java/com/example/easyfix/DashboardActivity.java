@@ -22,7 +22,7 @@ import com.squareup.picasso.Picasso;
 public class DashboardActivity extends AppCompatActivity {
 
     private static final String TAG = "DashboardActivity";
-    private Button btnSignout, btnEditProfile, btnViewProfile, btnFindService, btnViewRating, btnPendingOrder;
+    private Button btnSignout, btnEditProfile, btnViewProfile, btnFindService, btnViewRating, btnPendingOrder,btnViewReviewHistory,btnGiveRating;
     private FirebaseAuth mAuth;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +33,8 @@ public class DashboardActivity extends AppCompatActivity {
         btnViewProfile=findViewById(R.id.button_view_profile);
         btnViewRating=findViewById(R.id.button_rating);
         btnPendingOrder=findViewById(R.id.button_pending_order);
+        btnViewReviewHistory=findViewById(R.id.button_view_review_history);
+        btnGiveRating=findViewById(R.id.button_give_rating);
 
         // Initialize FirebaseAuth
         mAuth = FirebaseAuth.getInstance();
@@ -49,7 +51,20 @@ public class DashboardActivity extends AppCompatActivity {
                             btnPendingOrder.setVisibility(View.GONE);
                             btnViewRating.setVisibility(View.GONE);
                         }
+                        else{
+                            btnGiveRating.setVisibility(GONE);
+                            btnViewReviewHistory.setVisibility(GONE);
+                        }
+
                     } else {
+                        btnViewProfile.setVisibility(GONE);
+                        btnPendingOrder.setVisibility(View.GONE);
+                        btnViewRating.setVisibility(View.GONE);
+                        btnGiveRating.setVisibility(GONE);
+                        btnViewReviewHistory.setVisibility(GONE);
+                        btnFindService.setVisibility(View.GONE);
+                        btnEditProfile.setText("Complete Profile");
+
                         Log.d(TAG, "No such document");
                         Toast.makeText(DashboardActivity.this, "No such document", Toast.LENGTH_SHORT).show();
                     }
@@ -107,11 +122,21 @@ public class DashboardActivity extends AppCompatActivity {
 
         });
 
-        btnViewRating.setOnClickListener(new View.OnClickListener() {
+        btnViewReviewHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(DashboardActivity.this, ReviewActivity.class);
+                startActivity(intent);
             }
         });
+
+        btnGiveRating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DashboardActivity.this, GiveReviewActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }

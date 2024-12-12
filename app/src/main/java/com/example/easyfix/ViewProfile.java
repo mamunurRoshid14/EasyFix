@@ -81,6 +81,11 @@ public class ViewProfile extends AppCompatActivity {
                     tvNumberOfOrder.setText(String.valueOf(document.getLong("number_of_orders")));
                     tvRating.setText(String.valueOf(document.getDouble("rating")));
                     servicetype = document.getString("typeofService");
+
+                    if(servicetype.equals("Service Taker")){
+                        tvRating.setVisibility(View.GONE);
+                        tvNumberOfOrder.setVisibility(View.GONE);
+                    }
                     // Load profile image using Picasso or any other image loading library
                     String imageUrl = document.getString("imageUrl");
                     if (imageUrl != null && !imageUrl.isEmpty()) {
