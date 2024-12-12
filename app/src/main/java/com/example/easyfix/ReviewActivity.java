@@ -44,6 +44,7 @@ public class ReviewActivity extends AppCompatActivity {
 
         // Query Firestore for orders that are not reviewed and belong to the current user
         FirebaseFirestore.getInstance().collection("orders")
+                .whereEqualTo("confirmed", true)
                 .whereEqualTo("isReviewed", true)  // Filter by isReviewed = true
                 .whereEqualTo("orderFrom", currentUserId)  // Filter by orderFrom = current user's UID
                 .get()
