@@ -32,6 +32,10 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
     public void onBindViewHolder(@NonNull ReviewViewHolder holder, int position) {
         Order order = orderList.get(position);
 
+        holder.ratingBar.setIsIndicator(true);
+        holder.ratingBar.setClickable(false);
+        holder.ratingBar.setFocusable(false);
+
         // Fetch name from Firestore users collection
         FirebaseFirestore.getInstance().collection("users")
                 .document(order.getOrderTo())

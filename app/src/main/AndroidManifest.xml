@@ -45,6 +45,10 @@
         <activity
             android:name=".GiveReviewActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".RatingActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

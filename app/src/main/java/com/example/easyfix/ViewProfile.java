@@ -152,5 +152,13 @@ public class ViewProfile extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Error placing order: " + e.getMessage(), Toast.LENGTH_LONG).show();
                     });
         });
+        btnViewReviews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ViewProfile.this, RatingActivity.class);
+                intent.putExtra("userId",toUser);
+                startActivity(intent);
+            }
+        });
     }
 }

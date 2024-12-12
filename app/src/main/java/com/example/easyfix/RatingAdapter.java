@@ -1,7 +1,6 @@
 package com.example.easyfix;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.List;
 
-public class GiveReviewAdapter extends RecyclerView.Adapter<GiveReviewAdapter.ReviewViewHolder> {
+public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ReviewViewHolder> {
 
     private Context context;
     private List<Order> orderList;
 
-    public GiveReviewAdapter(Context context, List<Order> orderList) {
+    public RatingAdapter(Context context, List<Order> orderList) {
         this.context = context;
         this.orderList = orderList;
     }
@@ -25,7 +24,7 @@ public class GiveReviewAdapter extends RecyclerView.Adapter<GiveReviewAdapter.Re
     @NonNull
     @Override
     public ReviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_give_review, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_review, parent, false);
         return new ReviewViewHolder(view);
     }
 
@@ -37,9 +36,10 @@ public class GiveReviewAdapter extends RecyclerView.Adapter<GiveReviewAdapter.Re
         holder.ratingBar.setClickable(false);
         holder.ratingBar.setFocusable(false);
 
+
         // Fetch name from Firestore users collection
         FirebaseFirestore.getInstance().collection("users")
-                .document(order.getOrderTo())
+                .document(order.getOrderFrom())
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
@@ -57,17 +57,8 @@ public class GiveReviewAdapter extends RecyclerView.Adapter<GiveReviewAdapter.Re
         holder.tvServiceType.setText(order.getServiceType() != null ? order.getServiceType() : "Unknown service");
         holder.ratingBar.setRating(order.getRating() > 0 ? (float) order.getRating() : 0);
         holder.tvReview.setText(order.getReview() != null ? order.getReview() : "No review provided");
-
-        // Set OnClickListener to open ModifyReviewActivity
-        holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, ModifyReviewActivity.class);
-            intent.putExtra("orderId", order.getOrderId());
-            intent.putExtra("currentRating", (float) order.getRating());
-            intent.putExtra("currentReview", order.getReview());
-            intent.putExtra("toUser", order.getOrderTo());
-            context.startActivity(intent);
-        });
     }
+
 
     @Override
     public int getItemCount() {
