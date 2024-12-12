@@ -54,6 +54,31 @@ public class ViewProfile extends AppCompatActivity {
             btnPlaceOrder.setVisibility(View.GONE);
             btnViewReviews.setVisibility(View.GONE);
         }
+        if(currentUser == null){
+            btnViewReviews.setVisibility(View.GONE);
+        }
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users")
+                .document(currentUser.getUid())
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        String typeOfService = documentSnapshot.getString("typeofService");
+
+                        if (typeOfService != null && !typeOfService.equals("Service Taker")) {
+                            // Exit or perform your desired action
+                            btnPlaceOrder.setVisibility(View.GONE);
+                        }
+
+                        // Continue with further logic if typeOfService equals "Service Taker"
+                        System.out.println("Proceeding as Service Taker...");
+                    } else {
+                        System.out.println("Document does not exist.");
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    System.out.println("Error fetching document: " + e.getMessage());
+                });
 
         // Fetch data from Firestore
         fetchUserData(userId);
