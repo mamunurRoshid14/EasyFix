@@ -1,27 +1,61 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp">
 
+    <!-- Welcome TextView with Material Design -->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="32dp"
+        android:text="Provide Review Here"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="?attr/colorPrimary"
+        android:fontFamily="sans-serif-medium" />
+
     <RatingBar
+        android:layout_marginTop="50dp"
         android:id="@+id/rating_bar_modify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:numStars="5"
         android:stepSize="0.5" />
 
-    <EditText
-        android:id="@+id/edit_review"
+    <!-- Material TextInputLayout and TextInputEditText for review -->
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:hint="Enter your review"
-        android:layout_marginTop="16dp" />
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="?attr/colorPrimary">
 
-    <Button
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_review"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:lines="4"
+            android:maxLines="6"
+            android:gravity="top|start"
+            android:scrollbars="vertical" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Material Button -->
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Save"
-        android:layout_marginTop="16dp" />
+        android:textAllCaps="false"
+        app:cornerRadius="8dp"
+        app:strokeColor="?attr/colorPrimary"
+        app:strokeWidth="2dp"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
 </LinearLayout>

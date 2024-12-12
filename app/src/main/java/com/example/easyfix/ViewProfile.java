@@ -41,44 +41,44 @@ public class ViewProfile extends AppCompatActivity {
         btnViewReviews = findViewById(R.id.btnViewReview);
         btnPlaceOrder = findViewById(R.id.btnPlaceOrder);
 
-
         // Get the userId from the Intent
         Intent intent = getIntent();
         String userId = intent.getStringExtra("userId");
         toUser = userId;
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseFirestore db2 = FirebaseFirestore.getInstance();
+
         // Get the current user
         FirebaseUser currentUser = auth.getCurrentUser();
-        if(currentUser != null && currentUser.getUid().equals(userId)){
+        if (currentUser != null && currentUser.getUid().equals(userId)) {
             btnPlaceOrder.setVisibility(View.GONE);
             btnViewReviews.setVisibility(View.GONE);
         }
-        if(currentUser == null){
-            btnViewReviews.setVisibility(View.GONE);
-        }
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("users")
-                .document(currentUser.getUid())
-                .get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
-                        String typeOfService = documentSnapshot.getString("typeofService");
+        if (currentUser == null) {
+            btnPlaceOrder.setVisibility(View.GONE);
+        } else {
+            // Fetch the current user's typeOfService from Firestore
+            db2.collection("users")
+                    .document(currentUser.getUid())
+                    .get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists()) {
+                            String typeOfService = documentSnapshot.getString("typeofService");
 
-                        if (typeOfService != null && !typeOfService.equals("Service Taker")) {
-                            // Exit or perform your desired action
-                            btnPlaceOrder.setVisibility(View.GONE);
+                            if (typeOfService != null && !typeOfService.equals("Service Taker")) {
+                                btnPlaceOrder.setVisibility(View.GONE);
+                            }
+
+                            System.out.println("Proceeding as Service Taker...");
+                        } else {
+                            System.out.println("Document does not exist.");
                         }
-
-                        // Continue with further logic if typeOfService equals "Service Taker"
-                        System.out.println("Proceeding as Service Taker...");
-                    } else {
-                        System.out.println("Document does not exist.");
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    System.out.println("Error fetching document: " + e.getMessage());
-                });
+                    })
+                    .addOnFailureListener(e -> {
+                        System.out.println("Error fetching document: " + e.getMessage());
+                    });
+        }
 
         // Fetch data from Firestore
         fetchUserData(userId);
@@ -86,6 +86,7 @@ public class ViewProfile extends AppCompatActivity {
         // Set onClick listeners for email and phone number
         setOnClickListeners();
     }
+
 
     private void fetchUserData(String userId) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();

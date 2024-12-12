@@ -1,0 +1,136 @@
+package com.example.easyfix;
+
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.DocumentSnapshot;
+
+import java.util.List;
+
+public class PendingOrderAdapter extends RecyclerView.Adapter<PendingOrderAdapter.ReviewViewHolder> {
+
+    private Context context;
+    private List<Order> orderList;
+
+    public PendingOrderAdapter(Context context, List<Order> orderList) {
+        this.context = context;
+        this.orderList = orderList;
+    }
+
+    @NonNull
+    @Override
+    public ReviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_pending_order, parent, false);
+        return new ReviewViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ReviewViewHolder holder, int position) {
+        Order order = orderList.get(position);
+
+        // Fetch name and location from Firestore users collection
+        FirebaseFirestore.getInstance().collection("users")
+                .document(order.getOrderFrom())  // Assuming 'orderFrom' holds the user document ID
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        String name = documentSnapshot.getString("fullName");
+                        holder.tvName.setText(name != null ? name : "Name not available");
+                        String location = documentSnapshot.getString("location");
+                        holder.tvLocation.setText(location != null ? location : "Not Available");
+                        String phoneNumber = documentSnapshot.getString("phoneNumber");
+                        holder.tvMobile.setText(phoneNumber != null ? phoneNumber : "Not Available");
+
+
+                        // Fetch latitude and longitude from the user document
+                        double latitude = documentSnapshot.getDouble("latitude");
+                        double longitude = documentSnapshot.getDouble("longitude");
+
+                        // Store these values to use in the Get Directions button
+                        holder.btnGetDirection.setOnClickListener(v -> {
+                            // Construct the Google Maps URI with the latitude and longitude
+                            String uri = String.format("google.navigation:q=%f,%f", latitude, longitude);
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                            intent.setPackage("com.google.android.apps.maps");
+                            context.startActivity(intent);
+                        });
+                    } else {
+                        holder.tvName.setText("User not found");
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    holder.tvName.setText("Error fetching user");
+                });
+
+
+        // Decline button - delete the order from the "orders" collection
+        holder.btnDecline.setOnClickListener(v -> {
+            FirebaseFirestore.getInstance().collection("orders")
+                    .document(order.getOrderId())  // Assuming you have an orderId to delete the correct document
+                    .delete()
+                    .addOnSuccessListener(aVoid -> {
+                        Log.d("PendingOrderAdapter", "Order declined and deleted.");
+                        // Optionally, update the local list and notify the adapter
+                        orderList.remove(position);
+                        notifyItemRemoved(position);
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.e("PendingOrderAdapter", "Error deleting order", e);
+                    });
+        });
+
+        // Accept button - update the "confirmed" field to true
+        holder.btnAccept.setOnClickListener(v -> {
+            FirebaseFirestore.getInstance().collection("orders")
+                    .document(order.getOrderId())  // Assuming you have an orderId to update the correct document
+                    .update("confirmed", true)
+                    .addOnSuccessListener(aVoid -> {
+                        Log.d("PendingOrderAdapter", "Order accepted and confirmed.");
+                        // Optionally, update the UI or notify the adapter
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.e("PendingOrderAdapter", "Error updating order", e);
+                    });
+        });
+
+
+        holder.tvMobile.setOnClickListener(view -> {
+            String phone = holder.tvMobile.getText().toString();
+            Intent phoneIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
+            context.startActivity(phoneIntent);
+        });
+    }
+
+
+
+    @Override
+    public int getItemCount() {
+        return orderList.size();
+    }
+
+    public static class ReviewViewHolder extends RecyclerView.ViewHolder {
+        TextView tvName, tvLocation,tvMobile;
+        Button btnAccept, btnDecline, btnGetDirection;
+
+        public ReviewViewHolder(@NonNull View itemView) {
+            super(itemView);
+            tvName = itemView.findViewById(R.id.tv_name);
+            tvLocation = itemView.findViewById(R.id.tv_location);
+            tvMobile = itemView.findViewById(R.id.tv_mobile);
+            btnAccept = itemView.findViewById(R.id.btn_accept);
+            btnDecline = itemView.findViewById(R.id.btn_decline);
+            btnGetDirection = itemView.findViewById(R.id.btn_get_direction);
+        }
+    }
+}

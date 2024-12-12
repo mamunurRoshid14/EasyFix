@@ -49,6 +49,9 @@
         <activity
             android:name=".RatingActivity"
             android:exported="false" />
+        <activity
+            android:name=".PendingOrderActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

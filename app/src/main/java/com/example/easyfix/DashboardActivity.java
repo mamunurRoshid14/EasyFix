@@ -146,5 +146,14 @@ public class DashboardActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btnPendingOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DashboardActivity.this, PendingOrderActivity.class);
+                intent.putExtra("userId",mAuth.getUid());
+                startActivity(intent);
+            }
+        });
     }
 }
