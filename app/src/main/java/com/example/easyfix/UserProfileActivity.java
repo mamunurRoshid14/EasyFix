@@ -76,6 +76,10 @@ public class UserProfileActivity extends AppCompatActivity {
         spinnerTypeOfService = findViewById(R.id.spinnerTypeOfService);
         buttonSave = findViewById(R.id.buttonSave);
         buttonUpdateLocation = findViewById(R.id.buttonUpdateLocation);
+        editTextEmail.setKeyListener(null);
+        editTextEmail.setFocusable(false);
+        editTextEmail.setFocusableInTouchMode(false);
+        editTextEmail.setCursorVisible(false);
 
         // Set up the Spinner with array of service types
         adapter = ArrayAdapter.createFromResource(this,

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,7 @@ public class ViewProfile extends AppCompatActivity {
     private ImageView ivProfilePicture;
     private Button btnViewReviews, btnPlaceOrder;
     private String toUser, servicetype;
+    private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +42,7 @@ public class ViewProfile extends AppCompatActivity {
         tvRating = findViewById(R.id.tvRating);
         btnViewReviews = findViewById(R.id.btnViewReview);
         btnPlaceOrder = findViewById(R.id.btnPlaceOrder);
+        progressBar=findViewById(R.id.progress_bar);
 
         // Get the userId from the Intent
         Intent intent = getIntent();
@@ -80,8 +83,11 @@ public class ViewProfile extends AppCompatActivity {
                     });
         }
 
+        progressBar.setVisibility(View.VISIBLE);
         // Fetch data from Firestore
         fetchUserData(userId);
+
+        progressBar.setVisibility(View.GONE);
 
         // Set onClick listeners for email and phone number
         setOnClickListeners();
@@ -89,6 +95,7 @@ public class ViewProfile extends AppCompatActivity {
 
 
     private void fetchUserData(String userId) {
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference userRef = db.collection("users").document(userId);
 

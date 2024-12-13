@@ -136,14 +136,9 @@
                     android:id="@+id/ratingBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_weight="1"
-                    android:background="?attr/selectableItemBackground"
-                    android:isIndicator="true"
                     android:numStars="5"
-                    android:padding="0dp"
-                    android:rating="0"
-                    android:stepSize="0.1" />
+                    android:stepSize="0.1"
+                    android:rating="5" />
             </TableRow>
 
 

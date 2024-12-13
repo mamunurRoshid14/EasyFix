@@ -34,7 +34,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         holder.tvUserServiceType.setText(user.getTypeofService());
         holder.tvUserPhone.setText(user.getPhoneNumber());
         holder.tvUserLocation.setText(user.getLocation());
-        holder.ratingBar.setRating((float)(user.getRating()/2.0));
+        holder.ratingBar.setRating((float)(user.getRating()));
         holder.bind(userList.get(position), onItemClickListener);
     }
 
