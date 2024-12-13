@@ -13,7 +13,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PendingOrderActivity extends AppCompatActivity {
+public class PendingOrderActivity extends AppCompatActivity implements PendingOrderAdapter.OnOrderActionListener {
 
     private RecyclerView recyclerView;
     private PendingOrderAdapter ratingAdapter;
@@ -30,7 +30,7 @@ public class PendingOrderActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         orderList = new ArrayList<>();
-        ratingAdapter = new PendingOrderAdapter(this, orderList);
+        ratingAdapter = new PendingOrderAdapter(this, orderList, this);
         recyclerView.setAdapter(ratingAdapter);
 
         fetchOrders();
@@ -39,34 +39,59 @@ public class PendingOrderActivity extends AppCompatActivity {
     private void fetchOrders() {
         progressBar.setVisibility(View.VISIBLE);
 
-        String userId= getIntent().getStringExtra("userId");
-        // Query Firestore for orders that are not reviewed and belong to the current user
+        String userId = getIntent().getStringExtra("userId");
         FirebaseFirestore.getInstance().collection("orders")
                 .whereEqualTo("confirmed", false)
-                .whereEqualTo("isReviewed", false)  // Filter by isReviewed = true
-                .whereEqualTo("orderTo", userId)  // Filter by orderFrom = userId
+                .whereEqualTo("isReviewed", false)
+                .whereEqualTo("orderTo", userId)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (!queryDocumentSnapshots.isEmpty()) {
                         orderList.clear();
-                        // Convert Firestore documents to Order objects
                         orderList.addAll(queryDocumentSnapshots.toObjects(Order.class));
 
-                        // Set orderId for each order
                         for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
                             String documentId = queryDocumentSnapshots.getDocuments().get(i).getId();
                             orderList.get(i).setOrderId(documentId);
                         }
 
-                        // Notify the adapter that the data has changed
                         ratingAdapter.notifyDataSetChanged();
                     }
                     progressBar.setVisibility(View.GONE);
                 })
                 .addOnFailureListener(e -> {
-                    // Handle error fetching orders
                     progressBar.setVisibility(View.GONE);
                     Log.e("FetchOrdersError", "Error fetching orders: ", e);
+                });
+    }
+
+    @Override
+    public void onAccept(Order order, int position) {
+        FirebaseFirestore.getInstance().collection("orders")
+                .document(order.getOrderId())
+                .update("confirmed", true)
+                .addOnSuccessListener(aVoid -> {
+                    orderList.remove(position);
+                    ratingAdapter.notifyItemRemoved(position);
+                    Log.d("PendingOrderActivity", "Order accepted and confirmed.");
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("PendingOrderActivity", "Error updating order", e);
+                });
+    }
+
+    @Override
+    public void onDecline(Order order, int position) {
+        FirebaseFirestore.getInstance().collection("orders")
+                .document(order.getOrderId())
+                .delete()
+                .addOnSuccessListener(aVoid -> {
+                    orderList.remove(position);
+                    ratingAdapter.notifyItemRemoved(position);
+                    Log.d("PendingOrderActivity", "Order declined and deleted.");
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("PendingOrderActivity", "Error deleting order", e);
                 });
     }
 }

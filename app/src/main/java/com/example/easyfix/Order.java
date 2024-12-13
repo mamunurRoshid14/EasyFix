@@ -72,11 +72,11 @@ public class Order {
         return orderId;
     }
 
-    public boolean isReviewed() {
+    public boolean getIsReviewed() {
         return isReviewed;
     }
 
-    public void setReviewed(boolean reviewed) {
-        isReviewed = reviewed;
+    public void setIsReviewed(boolean isReviewed) {
+        this.isReviewed = isReviewed;
     }
 }

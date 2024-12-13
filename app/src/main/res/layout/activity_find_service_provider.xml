@@ -340,7 +340,7 @@
                             android:id="@+id/image7Name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Part Care"
+                            android:text="Pet Care"
                             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                             android:gravity="center"/>
                     </LinearLayout>

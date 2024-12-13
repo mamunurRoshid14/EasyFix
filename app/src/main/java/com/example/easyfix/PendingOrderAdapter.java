@@ -22,10 +22,17 @@ public class PendingOrderAdapter extends RecyclerView.Adapter<PendingOrderAdapte
 
     private Context context;
     private List<Order> orderList;
+    private OnOrderActionListener orderActionListener;
 
-    public PendingOrderAdapter(Context context, List<Order> orderList) {
+    public interface OnOrderActionListener {
+        void onAccept(Order order, int position);
+        void onDecline(Order order, int position);
+    }
+
+    public PendingOrderAdapter(Context context, List<Order> orderList, OnOrderActionListener orderActionListener) {
         this.context = context;
         this.orderList = orderList;
+        this.orderActionListener = orderActionListener;
     }
 
     @NonNull
@@ -52,14 +59,11 @@ public class PendingOrderAdapter extends RecyclerView.Adapter<PendingOrderAdapte
                         String phoneNumber = documentSnapshot.getString("phoneNumber");
                         holder.tvMobile.setText(phoneNumber != null ? phoneNumber : "Not Available");
 
-
-                        // Fetch latitude and longitude from the user document
                         double latitude = documentSnapshot.getDouble("latitude");
                         double longitude = documentSnapshot.getDouble("longitude");
 
-                        // Store these values to use in the Get Directions button
+                        // Get Directions button
                         holder.btnGetDirection.setOnClickListener(v -> {
-                            // Construct the Google Maps URI with the latitude and longitude
                             String uri = String.format("google.navigation:q=%f,%f", latitude, longitude);
                             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                             intent.setPackage("com.google.android.apps.maps");
@@ -73,37 +77,18 @@ public class PendingOrderAdapter extends RecyclerView.Adapter<PendingOrderAdapte
                     holder.tvName.setText("Error fetching user");
                 });
 
-
-        // Decline button - delete the order from the "orders" collection
-        holder.btnDecline.setOnClickListener(v -> {
-            FirebaseFirestore.getInstance().collection("orders")
-                    .document(order.getOrderId())  // Assuming you have an orderId to delete the correct document
-                    .delete()
-                    .addOnSuccessListener(aVoid -> {
-                        Log.d("PendingOrderAdapter", "Order declined and deleted.");
-                        // Optionally, update the local list and notify the adapter
-                        orderList.remove(position);
-                        notifyItemRemoved(position);
-                    })
-                    .addOnFailureListener(e -> {
-                        Log.e("PendingOrderAdapter", "Error deleting order", e);
-                    });
-        });
-
-        // Accept button - update the "confirmed" field to true
+        // Pass click events to the activity via callback
         holder.btnAccept.setOnClickListener(v -> {
-            FirebaseFirestore.getInstance().collection("orders")
-                    .document(order.getOrderId())  // Assuming you have an orderId to update the correct document
-                    .update("confirmed", true)
-                    .addOnSuccessListener(aVoid -> {
-                        Log.d("PendingOrderAdapter", "Order accepted and confirmed.");
-                        // Optionally, update the UI or notify the adapter
-                    })
-                    .addOnFailureListener(e -> {
-                        Log.e("PendingOrderAdapter", "Error updating order", e);
-                    });
+            if (orderActionListener != null) {
+                orderActionListener.onAccept(order, position);
+            }
         });
 
+        holder.btnDecline.setOnClickListener(v -> {
+            if (orderActionListener != null) {
+                orderActionListener.onDecline(order, position);
+            }
+        });
 
         holder.tvMobile.setOnClickListener(view -> {
             String phone = holder.tvMobile.getText().toString();
@@ -112,15 +97,13 @@ public class PendingOrderAdapter extends RecyclerView.Adapter<PendingOrderAdapte
         });
     }
 
-
-
     @Override
     public int getItemCount() {
         return orderList.size();
     }
 
     public static class ReviewViewHolder extends RecyclerView.ViewHolder {
-        TextView tvName, tvLocation,tvMobile;
+        TextView tvName, tvLocation, tvMobile;
         Button btnAccept, btnDecline, btnGetDirection;
 
         public ReviewViewHolder(@NonNull View itemView) {

@@ -168,8 +168,9 @@ public class ViewProfile extends AppCompatActivity {
             order.setOrderFrom(currentUser.getUid()); // Set UID of the current user
             order.setOrderTo(toUser); // Example value, replace with real data
             order.setConfirmed(false);
+            order.setIsReviewed(false);
             order.setReview("Not Given Yet"); // Default review
-            order.setRating(5.0); // Default rating
+            order.setRating(0); // Default rating
             order.setServiceType(servicetype); // Example value, replace with real data
 
             // Push to Firestore
