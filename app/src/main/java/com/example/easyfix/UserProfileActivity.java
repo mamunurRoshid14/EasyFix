@@ -236,6 +236,7 @@ public class UserProfileActivity extends AppCompatActivity {
                                    double latitude, double longitude, String typeofService, String imageUrl) {
         UserAccount user = new UserAccount(fullName, bio, phoneNumber, currentUser.getUid(), imageUrl, location, age,
                 latitude, longitude, typeofService, 0, 0);
+        user.email=currentUser.getEmail();
 
         db.collection("users").document(currentUser.getUid()).set(user)
                 .addOnSuccessListener(aVoid -> Toast.makeText(UserProfileActivity.this, "Profile updated successfully", Toast.LENGTH_SHORT).show())

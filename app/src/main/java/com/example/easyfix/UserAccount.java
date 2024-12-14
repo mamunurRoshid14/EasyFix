@@ -13,6 +13,7 @@ public class UserAccount {
     private String typeofService;
     private int numberOfOrder;
     private double rating;
+    public String email;
 
     public UserAccount() {
     }
